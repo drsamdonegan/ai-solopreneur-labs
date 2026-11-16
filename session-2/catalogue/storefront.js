@@ -8,11 +8,11 @@ const priceFormat = new Intl.NumberFormat('en-AU', {minimumFractionDigits: 0, ma
 const aud = number => 'A$' + (Number.isInteger(Number(number)) ? priceFormat.format(number) : Number(number).toFixed(2));
 const names = {
   'New & Featured': "Women’s What’s New", Women: "Women’s What’s New", Men: "Men’s What’s New",
-  Accessories: 'Accessories', Bags: 'Bags', 'We Made Too Much': 'We Made Too Much',
+  Kids: 'Kids', Baby: 'Baby', Accessories: 'Accessories', Bags: 'Bags', 'We Made Too Much': 'We Made Too Much',
   Bestsellers: 'Bestsellers', 'Shop Groove': 'Shop Groove', 'Shop T-Shirts': 'T-Shirts', 'Shop Shorts': 'Shorts',
   Favourites: 'Your favourites'
 };
-const navigation = ['New & Featured', 'Women', 'Men', 'Accessories', 'Bags', 'Activity', 'We Made Too Much'];
+const navigation = ['Women', 'Men', 'Kids', 'Baby'];
 const features = [
   ['Bestsellers', 'bestsellers'], ['Shop Groove', 'groove'], ['Shop T-Shirts', 't-shirts'], ['Shop Shorts', 'shorts']
 ];
@@ -20,6 +20,7 @@ const iconPaths = {
   search: '<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5.5 5.5"/>',
   globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
   user: '<circle cx="12" cy="7.5" r="3.5"/><path d="M3.8 21a8.2 8.2 0 0 1 16.4 0"/>',
+  bag: '<path d="M2 3h3l2.4 13h12.1L22 6H5.6"/><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>',
   heart: '<path d="M12 21S2 14.4 2 8.4a5.1 5.1 0 0 1 10-1.5 5.1 5.1 0 0 1 10 1.5C22 14.4 12 21 12 21Z"/>',
   filter: '<path d="M2 5h20M5.5 12h13M9 19h6"/>',
   large: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 3v18"/>',
@@ -65,11 +66,10 @@ function navLinks() {
 }
 function shell() {
   return (!bannerDismissed ? '<div class="sf-announcement">Workshop storefront. <a href="#cms">Edit this collection in the CMS</a><button type="button" data-sf="hide-banner" aria-label="Dismiss announcement">' + icon('close') + '</button></div>' : '') +
-    '<header class="sf-header"><a href="#store" data-section="New &amp; Featured" class="sf-logo" aria-label="Collection home"><img src="reference/wordmark.svg" alt="lululemon"></a>' +
+    '<header class="sf-header"><a href="#store" data-section="New &amp; Featured" class="sf-logo" aria-label="UNIQLO workshop collection home"><img src="reference/uniqlo-logo.png" alt="UNIQLO" width="64" height="64"></a>' +
     '<nav class="sf-navigation" aria-label="Shop departments">' + navLinks() + '</nav><div class="sf-tools">' +
-    '<button type="button" data-sf="search" aria-label="Search products">' + icon('search') + '<span>Search</span></button>' +
-    '<button type="button" data-sf="location" class="sf-country">' + icon('globe') + '<span>Australia (AUD)</span></button>' +
-    '<a href="#cms" title="Open workshop CMS" aria-label="Open workshop CMS">' + icon('user') + '</a>' + toggle('heart','View favourites') +
+    '<button type="button" data-sf="search" aria-label="Search products">' + icon('search') + '</button>' + toggle('heart','View favourites') +
+    '<a href="#cms" title="Open workshop CMS" aria-label="Open workshop CMS">' + icon('user') + '</a>' + toggle('bag','Shopping bag') +
     '<button type="button" data-sf="menu" class="sf-menu-toggle" aria-label="Browse departments">' + icon('menu') + '</button></div></header>';
 }
 function tail() {
@@ -81,6 +81,8 @@ function matchesNav(item, selection) {
   switch (selection) {
     case 'Women': return /women|unisex/i.test(item.division);
     case 'Men': return /^(men|mens|men.s|unisex)$/i.test(String(item.division));
+    case 'Kids': return /^(kids|children|girls|boys)$/i.test(String(item.division));
+    case 'Baby': return /^(baby|babies|infants)$/i.test(String(item.division));
     case 'Accessories': return /accessor|bag|sock|hat|bottle|belt/i.test(category + ' ' + item.department);
     case 'Bags': return /bag|tote|backpack|pouch|satchel/.test(category);
     case 'We Made Too Much': return item.salePrice != null && item.salePrice !== '';
@@ -202,6 +204,9 @@ function openPanel(which,ctx) {
       '</select></label>' + panelField('Category','category',items.map(p=>p.productClass)) + panelField('Colour','colour',items.map(p=>p.colour)) +
       panelField('Size','size',items.flatMap(p=>p.sizes)) + panelField('Activity','activity',items.map(p=>p.activity)) +
       '<button class="sf-solid" type="submit">View products</button><button type="button" data-sf="reset">Clear all filters</button></form>';
+  } else if (which === 'bag') {
+    title.textContent = 'Your shopping bag';
+    content.innerHTML = '<p>Your bag is empty.</p><button type="button" class="sf-solid" data-sf="close">Continue browsing</button>';
   } else if (which === 'search') {
     title.textContent = 'Search'; content.innerHTML = '<form class="sf-controls-form"><label>Search products<input type="search" name="query" placeholder="Product name, colour or SKU" value="' + escape(listing.query) + '"></label><button class="sf-solid">Search collection</button></form>';
   } else if (which === 'location') {

@@ -1,6 +1,6 @@
 import { fieldGroups, fields, labels, display, prepare, product, rawForm, referenceTables, validate,
   editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=studio-1';
-import { renderStorefront, renderProduct } from './storefront.js?v=studio-1';
+import { renderStorefront, renderProduct } from './storefront.js?v=uniqlo-1';
 
 const main = document.querySelector('#main');
 const notice = document.querySelector('#notice');
