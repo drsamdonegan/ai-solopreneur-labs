@@ -236,6 +236,14 @@ window.LAB2 = {
       "revised": true
     },
     {
+      "n": 27,
+      "title": "Complex AI Workflows",
+      "subtitle": "",
+      "kind": "divider",
+      "tabs": [],
+      "note": "Introduce the next section with two examples of work that involves many connected steps. The product drop combines data cleanup, CMS entry and storefront checks. Bank reconciliation combines receipts, messages, calendar context and accounting decisions."
+    },
+    {
       "n": 24,
       "title": "The weekly product drop",
       "subtitle": "Every week, 100 rows arrive in Excel. How much of the work can you hand to an agent?",

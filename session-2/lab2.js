@@ -84,6 +84,7 @@ if(tab.type==='permissionShot')return `<div class="interface-layout permission-i
   const sections=[...document.querySelectorAll('.slide')];
   sections.forEach((section,i)=>{
     section.classList.add('redesigned');section.dataset.opsSlide=String(i+1);
+    section.classList.toggle('section-divider',slides[i].kind==='divider');
     if(!['hero','map'].includes(slides[i].kind))section.querySelector('.visual-stage').innerHTML=content(slides[i]);
     if(slides[i].kind==='hero'){
       const image=section.querySelector('.slide-image'),frame=document.createElement('figure');frame.className='ops-hero-art';image.before(frame);frame.append(image);

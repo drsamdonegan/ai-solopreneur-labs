@@ -12,6 +12,15 @@ body.lab2-native {
 .lab2-native .slide.redesigned .slide-copy .subtitle{font-family:var(--body-font);font-size:1.4375cqw;line-height:1.35;color:var(--brown);max-width:none}
 .lab2-native .layout-lab2-content.redesigned .slide-copy{left:5cqw;top:6cqh;width:90cqw}
 .lab2-native .layout-lab2-content.redesigned .visual-stage{left:5cqw;right:5cqw;top:27cqh;width:90cqw;height:60cqh;min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;transform:none;backdrop-filter:none}
+.lab2-native .slide.section-divider {background:var(--ink);color:var(--cream)}
+.lab2-native .section-divider .image-wash,
+.lab2-native .section-divider .grid-bg,
+.lab2-native .section-divider .paper-texture,
+.lab2-native .section-divider .visual-stage,
+.lab2-native .section-divider .subtitle {display:none}
+.lab2-native .layout-lab2-content.redesigned.section-divider .slide-copy {left:10cqw;top:50%;width:80cqw;transform:translateY(-50%);text-align:center}
+.lab2-native .slide.redesigned.section-divider .slide-copy h1 {margin:0;color:var(--cream);font-size:9.2cqw;line-height:1.02;letter-spacing:-.045em}
+.lab2-native .section-divider footer b {color:var(--cream)}
 .lab2-native .layout-lab-hero.redesigned .slide-copy{left:5cqw;top:22cqh;width:43cqw}
 .lab2-native .layout-lab-hero.redesigned .slide-copy h1{font-size:6.125cqw;line-height:.96}
 .lab2-native .layout-lab-hero.redesigned .subtitle{font-size:1.4375cqw;max-width:none;white-space:normal}
