@@ -92,3 +92,52 @@ export function product(row, form) {
   return { id: row.id, ...form, price: Number(form.price), salePrice: form.salePrice === '' ? null : Number(form.salePrice),
     sizes: pieces(form.sizes), stock: pieces(form.stock).map(Number), skus: pieces(form.skus) };
 }
+
+export function imageSource(value, baseURL) {
+  if (!String(value || '').trim()) return '';
+  try {
+    const url = new URL(value, baseURL);
+    return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+export function editorialForm(row, form) {
+  const result = Object.fromEntries(Object.entries(form).map(([key, value]) => [key, compact(value)]));
+  result.styleCode = result.styleCode || row.id;
+  result.colourCode = result.colourCode || '00';
+  result.styleColour = [result.styleCode, result.colourCode].join('_');
+  result.styleName = result.styleName || result.title;
+  const sizes = pieces(result.sizes);
+  result.sizes = display(sizes.length ? sizes : ['One Size']);
+  result.skus = display(pieces(result.sizes).map(size => result.styleColour + '_' + size));
+  result.stock = result.stock || display(pieces(result.sizes).map(() => 0));
+  return result;
+}
+
+export function validateEditorial(form, baseURL) {
+  const errors = {};
+  if (!form.title) errors.title = 'Enter a product title.';
+  const value = key => parseMoney(form[key]);
+  if (value('price') == null) errors.price = 'Enter a price in AUD, e.g. 89.90.';
+  if (form.salePrice && (value('salePrice') == null || value('salePrice') > value('price'))) {
+    errors.salePrice = 'Enter a sale price up to the regular price.';
+  }
+  for (const key of ['imageUrl', 'imageUrl2']) {
+    const source = form[key] || '';
+    const isCatalogueAsset = /^(?:\.\/)?(?:reference|images)\/[\w.-]+\.(?:avif|webp|jpe?g|png)$/i.test(source);
+    if ((key === 'imageUrl' || source) && (!imageSource(source, baseURL) || (!isCatalogueAsset && !/^https?:\/\//i.test(source)))) {
+      errors[key] = 'Enter a full HTTP(S) image URL or a catalogue image path.';
+    }
+  }
+  if (form.colourHex && !/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(form.colourHex)) {
+    errors.colourHex = 'Enter a hex colour, e.g. #945164.';
+  }
+  const sizes = pieces(form.sizes), stock = pieces(form.stock);
+  if (new Set(sizes).size !== sizes.length) errors.sizes = 'Use each size once.';
+  if (stock.length !== sizes.length || stock.some(v => !/^\d+$/.test(v) || !Number.isSafeInteger(Number(v)))) {
+    errors.stock = 'Enter one whole-number stock quantity per size, separated by |.';
+  }
+  return errors;
+}
