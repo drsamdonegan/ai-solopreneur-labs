@@ -111,7 +111,7 @@ export function editorialForm(row, form) {
   result.styleName = result.styleName || result.title;
   const sizes = pieces(result.sizes);
   result.sizes = display(sizes.length ? sizes : ['One Size']);
-  result.skus = display(pieces(result.sizes).map(size => result.styleColour + '_' + size));
+  result.skus = display(pieces(result.sizes).map(size => result.styleColour + '_' + (size === 'One Size' ? 'One-Size' : size)));
   result.stock = result.stock || display(pieces(result.sizes).map(() => 0));
   return result;
 }

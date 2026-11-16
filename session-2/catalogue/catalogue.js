@@ -1,5 +1,5 @@
 import { fieldGroups, fields, labels, display, prepare, product, rawForm, referenceTables, validate,
-  editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=studio-1';
+  editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=empty-store-2';
 import { renderStorefront, renderProduct } from './storefront.js?v=empty-store-1';
 
 const main = document.querySelector('#main');
