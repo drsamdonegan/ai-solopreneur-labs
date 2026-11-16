@@ -394,3 +394,47 @@ body.lab2-native {
 .lab2-native .catalogue-example span {color: var(--rust); font: 700 1cqw/1.25 var(--body-font)}
 .lab2-native .catalogue-example strong {font: 700 1.7cqw/1.2 var(--title-font)}
 .lab2-native .catalogue-example small {font: 500 1.05cqw/1.35 var(--body-font)}
+
+.lab2-native .bank-trace,
+.lab2-native .bank-workshop {
+  display: grid;
+  grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+  align-items: center;
+  gap: 4cqw;
+  height: 100%;
+  text-align: left;
+}
+.lab2-native .bank-line {
+  margin: 0;
+  padding: 2.4cqw;
+  background: var(--card);
+  border-top: .36cqw solid var(--teal);
+}
+.lab2-native .bank-line figcaption {
+  margin: 0 0 2cqw;
+  padding: 0 0 .9cqw;
+  border-bottom: 1px solid var(--brown);
+  color: var(--teal);
+  font: 750 1.45cqw/1.2 var(--body-font);
+}
+.lab2-native .bank-line p {margin: 0 0 .55cqw; color: var(--brown); font: 550 1.3cqw/1.25 var(--body-font)}
+.lab2-native .bank-line strong {font: 700 2.2cqw/1.2 var(--body-font)}
+.lab2-native .bank-amount {margin-top: 1.4cqw; font: 500 4.5cqw/1 var(--title-font); color: var(--ink)}
+.lab2-native .bank-amount small {font: 650 1.2cqw/1 var(--body-font); color: var(--brown)}
+.lab2-native .bank-line .bank-reference {margin: 1.5cqw 0 0; padding-top: .75cqw; border-top: 1px dashed var(--brown)}
+.lab2-native .bank-reference b {font-family: var(--code-font)}
+.lab2-native .bank-sources,
+.lab2-native .bank-outcomes {display: grid; gap: 1.25cqw; list-style: none; margin: 0; padding: 0}
+.lab2-native .bank-sources li,
+.lab2-native .bank-outcomes div {border-top: 2px solid var(--rust); padding-top: .9cqw}
+.lab2-native .bank-sources h2,
+.lab2-native .bank-outcomes dt {margin: 0 0 .45cqw; color: var(--rust); font: 750 1.85cqw/1.15 var(--body-font)}
+.lab2-native .bank-sources p,
+.lab2-native .bank-outcomes dd {margin: 0; color: var(--ink); font: 550 1.48cqw/1.32 var(--body-font)}
+.lab2-native .bank-launch h2 {margin: 0 0 .9cqw; font: 500 3.5cqw/1.04 var(--title-font); letter-spacing: -.03em}
+.lab2-native .bank-launch p {max-width: 33cqw; margin: 0 0 1.5cqw; color: var(--brown); font: 550 1.55cqw/1.35 var(--body-font)}
+.lab2-native .bank-launch-link {display: inline-block; padding: .75cqw 1.2cqw; border-radius: 2cqw; color: var(--card); background: var(--teal); font: 750 1.45cqw/1.2 var(--body-font); text-decoration: none}
+.lab2-native .bank-launch-link:hover,
+.lab2-native .bank-launch-link:focus-visible {background: var(--ink)}
+.lab2-native .prompt-reconciliation pre,
+.lab2-native .prompt-reconciliation code {font: 650 1.3cqw/1.22 var(--code-font)}

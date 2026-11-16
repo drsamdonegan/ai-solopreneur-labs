@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; form-action 'none'; base-uri 'none'"
+    />
+    <title>Bank reconciliation · Workshop sandbox</title>
+    <link rel="stylesheet" href="./bank.css" />
+    <script defer src="./bank.js"></script>
+  </head>
+  <body>
+    <header class="mast">
+      <div class="brandmark" aria-hidden="true">x</div>
+      <strong>Workshop sandbox</strong
+      ><span class="crumb">Accounting <b>›</b> Bank accounts</span
+      ><span class="spacer"></span
+      ><a href="../#slide-6" id="back-deck">Back to slides ↗</a>
+    </header>
+    <main>
+      <div class="identity">
+        <div class="bank-brand" id="account-name">Bank account</div>
+        <div class="balance">
+          <strong id="statement-balance">—</strong
+          ><span>Statement balance</span>
+        </div>
+        <div class="balance">
+          <strong id="xero-balance">—</strong
+          ><span>Balance in Xero</span>
+        </div>
+        <div class="actions">
+          <button class="link" data-action="report">
+            Reconciliation report</button
+          ><button class="outline" data-action="datasets">
+            Switch / import statement ▾
+          </button>
+        </div>
+      </div>
+      <div class="strip">
+        <span
+          ><strong id="import-count">—</strong> statement lines imported in the
+          last 30 days</span
+        ><span class="spacer"></span
+        ><span class="mode-badge" id="mode-badge">Practice statement</span
+        ><button class="primary" data-action="evidence">Evidence desk</button>
+      </div>
+      <section class="workspace" aria-label="Bank reconciliation workspace">
+        <div class="navigation">
+          <nav aria-label="Bank account views">
+            <button data-view="open" class="active">
+              Reconcile (<span id="open-count">0</span>)</button
+            ><button data-view="statements">Bank statements</button
+            ><button data-view="ledger">Account transactions</button
+            ><button data-view="review">
+              Reconciled (<span id="done-count">0</span>)
+            </button>
+          </nav>
+          <label class="compact"
+            ><input type="checkbox" id="compact" /> Compact view</label
+          >
+        </div>
+        <div class="toolbar">
+          <label class="search"
+            ><svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="10" cy="10" r="6"></circle>
+              <path d="m15 15 6 6"></path></svg
+            ><input
+              type="search"
+              id="search"
+              aria-label="Search bank account"
+              placeholder="Search for payee, amount, reference, or description" /></label
+          ><label class="held-filter"
+            ><input type="checkbox" id="only-notes" /> Review notes only</label
+          >
+        </div>
+        <div id="app"><p class="empty">Loading statement…</p></div>
+        <footer class="queue-footer">
+          <span id="count-label"></span
+          ><label id="suggest-wrap"
+            ><input type="checkbox" id="suggest" checked /> Suggest previous
+            entries</label
+          >
+        </footer>
+      </section>
+      <p class="privacy-line">
+        <strong>Training environment</strong> · Changes and attachments stay in
+        this browser. No Xero connection.
+      </p>
+    </main>
+    <datalist id="accounts">
+      <option>400 - Operating expenses</option>
+      <option>405 - Contractor expenses</option>
+      <option>406 - Travel-national</option>
+      <option>485 - Software subscriptions</option>
+      <option>200 - Sales</option>
+      <option>430 - Event catering</option>
+      <option>406 - Domestic travel</option>
+      <option>405 - Contractors</option>
+      <option>826 - Superannuation payable</option>
+    </datalist>
+    <datalist id="taxes">
+      <option>GST on Expenses</option>
+      <option>GST Free Expenses</option>
+      <option>BAS Excluded</option>
+      <option>GST on Income</option>
+    </datalist>
+    <dialog id="modal" aria-labelledby="modal-title">
+      <div class="dialog-header">
+        <div>
+          <div class="kicker">BANK RECONCILIATION LAB</div>
+          <h2 id="modal-title">Bank account</h2>
+        </div>
+        <button class="close" aria-label="Close dialog" data-action="close">
+          ×
+        </button>
+      </div>
+      <div id="modal-body"></div>
+    </dialog>
+    <div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>

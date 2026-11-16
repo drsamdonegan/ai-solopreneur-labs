@@ -1,0 +1,250 @@
+{
+  "id": "juniper-works-may-2026",
+  "name": "Juniper Works · fictional practice statement",
+  "mode": "practice",
+  "accountName": "Juniper Works",
+  "currency": "AUD",
+  "statementBalance": 25119.28,
+  "xeroBalance": 26080.58,
+  "importedCount": 83,
+  "rows": [
+    {
+      "id": "F01",
+      "date": "2026-05-08",
+      "payee": "Tidegate Pay",
+      "description": "Business card ending 5018",
+      "reference": "POS 8MAY TGP-9703",
+      "spent": 38.4,
+      "received": 0
+    },
+    {
+      "id": "F02",
+      "date": "2026-05-11",
+      "payee": "Mallow Street Kitchen",
+      "description": "Business card ending 5018",
+      "reference": "MSK-217",
+      "spent": 693.0,
+      "received": 0
+    },
+    {
+      "id": "F03",
+      "date": "2026-05-11",
+      "payee": "South Quay Parking",
+      "description": "Car park terminal 08",
+      "reference": "SQP-834",
+      "spent": 42.9,
+      "received": 0,
+      "suggestion": {
+        "contact": "South Quay Parking",
+        "account": "406 - Domestic travel",
+        "description": "Parking",
+        "event": "",
+        "project": "",
+        "tax": "GST on Expenses"
+      }
+    },
+    {
+      "id": "F04",
+      "date": "2026-05-13",
+      "payee": "Finch Bench Studio",
+      "description": "Electronic payment",
+      "reference": "FBS-184",
+      "spent": 1188.0,
+      "received": 0,
+      "suggestion": {
+        "contact": "Finch Bench Studio",
+        "account": "405 - Contractors",
+        "description": "FBS-112: six hours of lighting checks for Harbour Expo",
+        "event": "Harbour Expo",
+        "project": "",
+        "tax": "GST on Expenses"
+      }
+    },
+    {
+      "id": "F05",
+      "date": "2026-05-14",
+      "payee": "ORBIT INK CLOUD / SYDNEY",
+      "description": "Business card ending 8472",
+      "reference": "OIC-519",
+      "spent": 187.0,
+      "received": 0,
+      "suggestion": {
+        "contact": "Orbit Ink Cloud",
+        "account": "485 - Software subscriptions",
+        "description": "",
+        "event": "",
+        "project": "Juniper operations",
+        "tax": "GST on Expenses"
+      }
+    },
+    {
+      "id": "F06",
+      "date": "2026-05-15",
+      "payee": "Silverbank Benefits",
+      "description": "Clearing house direct debit",
+      "reference": "SB-4509",
+      "spent": 627.35,
+      "received": 0,
+      "suggestion": {
+        "contact": "Silverbank Benefits",
+        "account": "826 - Superannuation payable",
+        "description": "",
+        "event": "",
+        "project": "",
+        "tax": "BAS Excluded"
+      }
+    }
+  ],
+  "ledger": [
+    {
+      "id": "BOOK-184",
+      "date": "2026-05-13",
+      "contact": "Finch Bench Studio",
+      "description": "Payment for supplier bill FBS-184, Studio Library cataloguing.",
+      "reference": "FBS-184",
+      "amount": 1188.0,
+      "direction": "spent"
+    },
+    {
+      "id": "BOOK-4509",
+      "date": "2026-05-15",
+      "contact": "Silverbank Benefits",
+      "description": "Booked clearing payment for the April contribution batch.",
+      "reference": "SB-4509",
+      "amount": 627.35,
+      "direction": "spent"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "CAL-08A",
+      "source": "Google Calendar",
+      "date": "2026-05-08",
+      "title": "Supplier walk-through",
+      "body": "09:00–10:00. Juniper Works team visited the Foundry Rooms to discuss catering. No purchases are recorded in this invitation."
+    },
+    {
+      "id": "CAL-08B",
+      "source": "Google Calendar",
+      "date": "2026-05-08",
+      "title": "Studio supply collection",
+      "body": "14:30–15:00. A second team member planned a stationery pick-up. The calendar entry contains no supplier, amount or receipt."
+    },
+    {
+      "id": "GM-09",
+      "source": "Gmail",
+      "date": "2026-05-09",
+      "title": "Card descriptor enquiry",
+      "body": "Finance asked who used Tidegate Pay on 8 May. Tidegate processes payments for several shops. The merchant receipt has not been found."
+    },
+    {
+      "id": "CAL-11",
+      "source": "Google Calendar",
+      "date": "2026-05-11",
+      "title": "Dockside Design Forum",
+      "body": "09:00–16:00 at South Quay Hall. Lunch for 30 attendees at 12:15. The delivery coordinator will drive the signage and catering supplies to the hall."
+    },
+    {
+      "id": "GM-217",
+      "source": "Gmail",
+      "date": "2026-05-11",
+      "title": "Lunch order MSK-217",
+      "body": "Mallow Street Kitchen sent a paid receipt for 30 lunch packs delivered to South Quay Hall. Total AUD 693.00 including AUD 63.00 GST."
+    },
+    {
+      "id": "SL-217",
+      "source": "Slack",
+      "date": "2026-05-11",
+      "title": "Dockside lunch delivery",
+      "body": "In the Dockside Design Forum channel, the host wrote: “All 30 Mallow Street lunch packs are at registration for the forum. Order MSK-217 is complete.”"
+    },
+    {
+      "id": "R-217",
+      "source": "Receipt",
+      "date": "2026-05-11",
+      "title": "MSK-217 · Mallow Street Kitchen",
+      "body": "Paid receipt for the 30 Dockside Design Forum lunch packs.",
+      "href": "receipts/msk-217.pdf"
+    },
+    {
+      "id": "GM-834",
+      "source": "Gmail",
+      "date": "2026-05-11",
+      "title": "Parking receipt SQP-834",
+      "body": "South Quay Parking sent the receipt for bay 58, AUD 42.90 including AUD 3.90 GST."
+    },
+    {
+      "id": "SL-834",
+      "source": "Slack",
+      "date": "2026-05-11",
+      "title": "Parking at South Quay Hall",
+      "body": "The forum coordinator posted: “I unloaded the signs at South Quay Hall and parked in bay 58 for the forum. Parking was on the business card.”"
+    },
+    {
+      "id": "R-834",
+      "source": "Receipt",
+      "date": "2026-05-11",
+      "title": "SQP-834 · South Quay Parking",
+      "body": "Exit receipt for bay 58 showing the parking date and amount.",
+      "href": "receipts/sqp-834.pdf"
+    },
+    {
+      "id": "GM-184",
+      "source": "Gmail",
+      "date": "2026-05-12",
+      "title": "Invoice FBS-184 for Studio Library",
+      "body": "Finch Bench Studio invoiced 12 cataloguing hours for Studio Library. The invoice references FBS-184, AUD 1,188.00 including AUD 108.00 GST."
+    },
+    {
+      "id": "SL-184",
+      "source": "Slack",
+      "date": "2026-05-13",
+      "title": "Studio Library invoice paid",
+      "body": "Finance posted: “FBS-184 is approved, and its $1,188 payment is in the books. FBS-112 was the old lighting job.”"
+    },
+    {
+      "id": "R-184",
+      "source": "Receipt",
+      "date": "2026-05-12",
+      "title": "FBS-184 · Finch Bench Studio invoice",
+      "body": "Supplier invoice for 12 hours of Studio Library cataloguing.",
+      "href": "receipts/fbs-184.pdf"
+    },
+    {
+      "id": "GM-519",
+      "source": "Gmail",
+      "date": "2026-05-14",
+      "title": "May team licences · OIC-519",
+      "body": "Orbit Ink Cloud sent Juniper Works a paid receipt for five workspace licences for May. Total AUD 187.00 including AUD 17.00 GST."
+    },
+    {
+      "id": "SL-519",
+      "source": "Slack",
+      "date": "2026-05-14",
+      "title": "Shared workspace renewals",
+      "body": "Operations confirmed that Orbit Ink Cloud is the shared team workspace. Its licences are tracked to Juniper operations."
+    },
+    {
+      "id": "R-519",
+      "source": "Receipt",
+      "date": "2026-05-14",
+      "title": "OIC-519 · Orbit Ink Cloud",
+      "body": "Paid receipt for the five May workspace licences.",
+      "href": "receipts/oic-519.pdf"
+    },
+    {
+      "id": "GM-4509",
+      "source": "Gmail",
+      "date": "2026-05-15",
+      "title": "Silverbank batch SB-4509 settled",
+      "body": "Silverbank Benefits confirmed settlement of the April contribution batch on 15 May. Batch SB-4509 total AUD 627.35."
+    },
+    {
+      "id": "SL-4509",
+      "source": "Slack",
+      "date": "2026-05-15",
+      "title": "Contribution batch in ledger",
+      "body": "Payroll entered the clearing payment for SB-4509. The April contributions were expensed in the payroll run."
+    }
+  ]
+}
