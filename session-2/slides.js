@@ -28,9 +28,14 @@ window.LAB2 = {
         {
           "label": "Checklist",
           "type": "locate"
+        },
+        {
+          "label": "Claude Duet",
+          "type": "duetWaitlist",
+          "url": "https://claude.com/product/claude-duet#waitlist"
         }
       ],
-      "note": "Take three minutes to locate the six features in Claude and Claude Code, then compare what you found with the group.",
+      "note": "Take three minutes to locate the six features in Claude and Claude Code, then compare what you found with the group. On the Claude Duet tab, give everyone a moment to open the official application form and add their details to the waitlist. Use the email address on their Claude account. Anthropic emails when access is ready; the research preview currently starts in the US, and joining does not guarantee an access date.",
       "revised": true
     },
     {
@@ -39,8 +44,26 @@ window.LAB2 = {
       "subtitle": "Coordinate emails, meetings, tasks and calendars",
       "kind": "overview",
       "tabs": [],
-      "note": "The live exercise uses email. Meeting minutes, follow-up drafts and calendar briefings are examples you can explore independently.",
+      "note": "The live exercise uses email. Meeting minutes, follow-up drafts, calendar briefings and a daily planner are examples you can explore independently. The daily planner reviews all outstanding tasks, assesses urgency and importance, and suggests what to focus on today.",
       "revised": true
+    },
+    {
+      "n": 24,
+      "title": "The weekly product drop",
+      "subtitle": "Every week, 100 rows arrive in Excel. How much of the work can you hand to an agent?",
+      "tabs": [
+        {
+          "label": "Try the workflow",
+          "type": "catalogueWorkshop"
+        },
+        {
+          "label": "Agent brief",
+          "type": "prompt",
+          "guide": ["Attach the weekly Excel file", "Open the practice CMS", "Review the exceptions"],
+          "prompt": "Prepare this week’s product drop in the practice catalogue CMS at https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/. Use the attached weekly-drop.xlsx and its reference sheets.\n\nFor each row, trim the style and colour codes, strip their leading zeros and join them with an underscore. Append an underscore and the size to make each SKU. Standardise the title, prices and stock, and map the merchandising fields into the CMS.\n\nCompare the product image with the garment and colour in the title. If the price, image or another field conflicts with its reference, hold the row and tell me exactly what needs checking.\n\nPublish the verified listings in this practice storefront. Open each listing and select each size. Check its SKU, title, price, photo and stock against the workbook. Report the number of listings published, SKUs checked and rows held, with the reason for each exception."
+        }
+      ],
+      "note": "Download the workbook and try the first row by hand. Open the CMS alongside Excel, convert the raw codes to a listing key, and confirm the image and prices before publishing. In the shop, switch from XS to XL. The SKU suffix and stock change, while the crimson skirt and its $89.90 price stay the same. Next, try the batch rules and open R003. The supplier labels it Moss but the image shows a crimson skirt. Compare the two images, find the approved URL in the workbook’s Asset Library, and correct the CMS entry. For the agent exercise, give the workbook and agent brief to a browser-enabled agent. Compare the rows that can be published with the exceptions that need someone to investigate. Each attendee’s practice catalogue is saved in their own browser."
     },
     {
       "n": 4,
