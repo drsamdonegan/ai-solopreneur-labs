@@ -387,6 +387,14 @@ window.LAB2 = {
       "revised": true
     },
     {
+      "n": 30,
+      "title": "Scheduled Tasks",
+      "subtitle": "",
+      "kind": "divider",
+      "tabs": [],
+      "note": "Introduce scheduled tasks before demonstrating the recurring inbox summary. Ask the group to think about which of their chosen tasks would be useful on a regular schedule."
+    },
+    {
       "n": 13,
       "title": "Schedule an Inbox Summary",
       "subtitle": "Receive a weekday inbox summary while you sleep",
