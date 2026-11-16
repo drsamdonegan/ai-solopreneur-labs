@@ -36,11 +36,11 @@
     </div>`;
     if(tab.type==='catalogueWorkshop')return `<div class="catalogue-workshop">
       <ol class="catalogue-route">
-        <li><div><h2>Read the supplier sheet</h2><p>Find the style, colour, sizes, stock and image URL.</p></div><a href="catalogue/weekly-drop.xlsx" download>Download Excel ↓</a></li>
-        <li><div><h2>Build the CMS listing</h2><p>Trim the zeros, join the codes and check the price.</p></div><a href="catalogue/" target="_blank" rel="noopener">Open CMS ↗</a></li>
-        <li><div><h2>Check the shop page</h2><p>Click each size. Match its SKU, title, price and image.</p></div><a href="catalogue/#store" target="_blank" rel="noopener">Open storefront ↗</a></li>
+        <li><div><h2>Read the supplier sheet</h2><p>Use Storefront Collection to rebuild the shop. Weekly Drop is the cleanup exercise.</p></div><a href="catalogue/weekly-drop.xlsx" download>Download Excel ↓</a></li>
+        <li><div><h2>Build the CMS listing</h2><p>Paste spreadsheet rows, review drafts, then publish.</p></div><a href="catalogue/" target="_blank" rel="noopener">Open CMS ↗</a></li>
+        <li><div><h2>Check the shop page</h2><p>Start empty. Publish one product, then the full collection.</p></div><a href="catalogue/#store" target="_blank" rel="noopener">Open storefront ↗</a></li>
       </ol>
-      <figure class="catalogue-example"><img src="catalogue/images/pleated-midi-skirt-crimson.webp" alt="Crimson pleated midi skirt from the practice catalogue"><figcaption><span>Row R001 · $89.90</span><strong>Crimson Pleated Midi Skirt</strong><small>0006101 + 0011 + XS → <b>6101_11_XS</b></small></figcaption></figure>
+      <figure class="catalogue-example"><img src="catalogue/reference/lw3ljws-77652-front.webp" alt="Laser Lime Super Swiftly shirt from the collection worksheet"><figcaption><span>Row L001 · $109.00</span><strong>Super Swiftly Relaxed-Fit Shirt</strong><small>LW3LJWS + 77652 + XS → <b>LW3LJWS_77652_XS</b></small></figcaption></figure>
     </div>`;
     if(tab.type==='demoVariant')return `<figure class="demo-variant"><div class="demo-variant-head">${tab.panels.map(([title])=>`<h2>${esc(title)}</h2>`).join('')}</div><div class="demo-variant-art"><img src="assets/${esc(tab.key)}.jpg" alt=""></div><div class="demo-variant-copy">${tab.panels.map(([, ...lines])=>`<section>${lines.map(line=>`<p>${esc(line)}</p>`).join('')}</section>`).join('')}</div><figcaption>${esc(tab.caption)}</figcaption></figure>`;
     if(tab.type==='sessionOrganisation')return `<figure class="code-demo session-organisation"><div class="session-patterns"><section><h2>Two or three sessions</h2><div class="session-pair"><strong>Web Builder</strong><span aria-hidden="true">↔</span><strong>Test session</strong></div><p>Message each other directly</p></section><section><h2>Many active sessions</h2><div class="session-tree"><strong>Coordinator</strong><span aria-hidden="true">↓</span><strong>Specialists</strong></div><p>Coordinator routes requests</p><p>Specialists do the work</p></section></div><figcaption>Claude Code · Cross-session messaging</figcaption></figure>`;

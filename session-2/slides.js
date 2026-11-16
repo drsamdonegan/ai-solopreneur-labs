@@ -75,12 +75,32 @@ window.LAB2 = {
           "label": "This afternoon",
           "type": "workshopAgenda",
           "rows": [
-            { "time": "1:00–2:30", "topic": "Connections, permissions & writing guidance" },
-            { "time": "2:30–2:40", "topic": "Break · 10 minutes", "break": true },
-            { "time": "2:40–4:10", "topic": "Complex workflows & hands-on practice" },
-            { "time": "4:10–4:20", "topic": "Break · 10 minutes", "break": true },
-            { "time": "4:20–5:50", "topic": "Scheduled tasks & your own agent" },
-            { "time": "5:50–6:00", "topic": "Share results & recap" }
+            {
+              "time": "1:00–2:30",
+              "topic": "Connections, permissions & writing guidance"
+            },
+            {
+              "time": "2:30–2:40",
+              "topic": "Break · 10 minutes",
+              "break": true
+            },
+            {
+              "time": "2:40–4:10",
+              "topic": "Complex workflows & hands-on practice"
+            },
+            {
+              "time": "4:10–4:20",
+              "topic": "Break · 10 minutes",
+              "break": true
+            },
+            {
+              "time": "4:20–5:50",
+              "topic": "Scheduled tasks & your own agent"
+            },
+            {
+              "time": "5:50–6:00",
+              "topic": "Share results & recap"
+            }
           ]
         }
       ],
@@ -302,11 +322,25 @@ window.LAB2 = {
         {
           "label": "Agent brief",
           "type": "prompt",
-          "guide": ["Attach the weekly Excel file", "Open the practice CMS", "Review the exceptions"],
+          "guide": [
+            "Attach the Excel workbook",
+            "Start with an empty shop",
+            "Publish and verify the collection"
+          ],
+          "prompt": "Use Chrome to rebuild this practice storefront from the attached weekly-drop.xlsx. Open https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/ and its Storefront tab. If needed, use Reset workshop in the CMS so the shop starts empty.\n\nUse the Storefront Collection worksheet for this demonstration. Copy its header and all 360 product rows into Paste spreadsheet rows in the CMS. Preview the import, check the titles, prices, images, sizes and stock, then import drafts. Open the first draft, review its input fields and publish it. Show that one product has appeared in the shop.\n\nPublish the remaining verified drafts using the CMS controls. Do all edits and publication through the visible Chrome interface. Open the storefront and check its collection layout, colour swatches and product detail pages against the workbook. Select the sizes and check their SKUs, stock, title, price and images. Report what you published, what you checked and any exceptions.\n\nThe separate Weekly Drop worksheet is the imperfect 100-row cleanup exercise; do not mix it into this collection rebuild."
+        },
+        {
+          "label": "Messy supplier feed",
+          "type": "prompt",
+          "guide": [
+            "Attach the weekly Excel file",
+            "Open the practice CMS",
+            "Review the exceptions"
+          ],
           "prompt": "Prepare this week’s product drop in the practice catalogue CMS at https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/. Use the attached weekly-drop.xlsx and its reference sheets.\n\nFor each row, trim the style and colour codes, strip their leading zeros and join them with an underscore. Append an underscore and the size to make each SKU. Standardise the title, prices and stock, and map the merchandising fields into the CMS.\n\nCompare the product image with the garment and colour in the title. If the price, image or another field conflicts with its reference, hold the row and tell me exactly what needs checking.\n\nPublish the verified listings in this practice storefront. Open each listing and select each size. Check its SKU, title, price, photo and stock against the workbook. Report the number of listings published, SKUs checked and rows held, with the reason for each exception."
         }
       ],
-      "note": "Download the workbook and try the first row by hand. Open the CMS alongside Excel, convert the raw codes to a listing key, and confirm the image and prices before publishing. In the shop, switch from XS to XL. The SKU suffix and stock change, while the crimson skirt and its $89.90 price stay the same. Next, try the batch rules and open R003. The supplier labels it Moss but the image shows a crimson skirt. Compare the two images, find the approved URL in the workbook’s Asset Library, and correct the CMS entry. For the agent exercise, give the workbook and agent brief to a browser-enabled agent. Compare the rows that can be published with the exceptions that need someone to investigate. Each attendee’s practice catalogue is saved in their own browser."
+      "note": "For the before-and-after Chrome demonstration, use Reset workshop in the CMS and show the empty storefront first. Open the workbook’s first worksheet, Storefront Collection: 360 colourways with 1,749 size SKUs. Copy A1:Z361 into Paste spreadsheet rows, preview, then import drafts. Review and publish the first product by hand, show it in the shop, then publish the remaining ready drafts through the visible CMS button. The full collection restores the existing images, swatches and original card order. Data is saved only in this browser; Reset workshop makes it empty again. Keep CMS and storefront tabs on the same origin so publication updates both. The separate Messy supplier feed tab preserves the original 100-row exercise: strip padded codes, build style_colour_size SKUs, standardise fields and investigate eight exceptions using the reference sheets. Do not publish that separate exercise into the collection rebuild."
     },
     {
       "n": 25,
@@ -340,7 +374,11 @@ window.LAB2 = {
           "label": "Agent brief",
           "type": "prompt",
           "practicePath": "reconciliation/",
-          "guide": ["Work one line at a time", "Save the evidence", "Check the open items"],
+          "guide": [
+            "Work one line at a time",
+            "Save the evidence",
+            "Check the open items"
+          ],
           "size": "reconciliation",
           "prompt": "Open {practiceUrl} in this browser. Work one line at a time. Use the Evidence desk for sample lines. For the presenter statement, search my email receipts, Slack and Google Calendar read-only. Save changes only in the practice account.\n\nCheck the payee, date, direction, amount, currency and reference. Try Find & Match first. Create only if no record exists and the evidence supports the category and purpose. Set tax and tracking only when documented.\n\nUnder Add details, cite the source and attach any receipt. If unsure, save a Discuss note with the likely purpose and missing evidence. Keep the line open. Verify and report the counts matched, created and still open, with one question per open line."
         }

@@ -100,12 +100,12 @@ function filtered(items) {
     && (!listing.category || item.productClass === listing.category) && (!listing.colour || item.colour === listing.colour)
     && (!listing.activity || item.activity === listing.activity) && (!listing.size || item.sizes.includes(listing.size))
     && (!query || [item.title,item.styleName,item.styleCode,item.colour,item.category,...item.skus].join(' ').toLowerCase().includes(query)));
-  // Colourways are available on the main card. A search, colour filter or new
-  // publication can also surface an individual colourway in its own right.
+  // Collection colourways stay on their main card. Search and colour filters
+  // can surface an individual colourway without changing the collection order.
   const discoverVariants = !!(query || listing.colour || listing.nav === 'Favourites');
-  const visible = result.filter(item => !item.isSwatchVariant || item.publishedAt || discoverVariants);
-  const edited = visible.filter(item => item.publishedAt || !item.referenceOrder);
-  const reference = visible.filter(item => item.referenceOrder && !item.publishedAt)
+  const visible = result.filter(item => !item.isSwatchVariant || discoverVariants);
+  const edited = visible.filter(item => !item.referenceOrder);
+  const reference = visible.filter(item => item.referenceOrder)
     .flatMap(item => (item.referencePositions || [item.referenceOrder]).map(pos => ({pos,item})))
     .sort((a,b)=>a.pos-b.pos).map(entry=>entry.item);
   const cards = [...edited, ...reference];
@@ -122,7 +122,7 @@ function cardSwatches(item, items, colours) {
     const key = String(p.colourCode);
     if (!actual.has(key) || p.id === item.id) actual.set(key,p);
   }
-  const options = !item.publishedAt && item.swatches?.length
+  const options = item.swatches?.length
     ? item.swatches.filter(opt=>actual.has(String(opt.colourCode)))
     : [];
   for (const p of variants) {
@@ -158,13 +158,15 @@ function updateProducts(ctx) {
   if (standardCollection && cards.length > 6) {
     cards.splice(6, 0, '<aside class="sf-promo"><h2>Publish your next product.</h2><a href="#cms">Open workshop CMS</a></aside>');
   }
-  grid.innerHTML = cards.join('') ||
-    '<div class="sf-no-results"><h2>No products found</h2><button type="button" data-sf="reset">Show all products</button></div>';
+  const empty = ctx.items.length === 0
+    ? '<div class="sf-no-results"><h2>Your storefront is empty</h2><p>Publish a product in the CMS to display it here.</p><a class="sf-solid" href="#cms">Open catalogue CMS</a></div>'
+    : '<div class="sf-no-results"><h2>No products found</h2><button type="button" data-sf="reset">Show all products</button></div>';
+  grid.innerHTML = cards.join('') || empty;
   ctx.main.querySelector('#sf-result-count').textContent = String(result.length);
   ctx.main.querySelector('#sf-heading').textContent = listing.query ? 'Search results' : names[listing.nav];
   const count = 1 + ['category','colour','size','activity'].filter(k => listing[k]).length;
   const filterCount = ctx.main.querySelector('#sf-filter-count');
-  filterCount.textContent = String(count); filterCount.hidden = !count;
+  if (filterCount) { filterCount.textContent = String(count); filterCount.hidden = !count; }
   ctx.main.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (listing.dense ? 'dense' : 'large'))));
 }
 function categories() {
@@ -280,9 +282,10 @@ export function renderStorefront(ctx) {
     Object.assign(listing,{nav:'New & Featured',query:'',category:'',size:'',colour:'',activity:'',sort:'featured'});
   }
   ctx.main.innerHTML = '<div class="sf-page">' + shell() + '<div class="sf-crumb">What\'s New</div><div class="sf-collection-head"><h1 id="sf-heading"></h1><span id="sf-result-count" aria-label="Products"></span></div>' +
-    categories() + '<section id="sf-products" aria-label="Collection products"></section>' + toolbar() + tail() + '</div>';
+    (ctx.items.length ? categories() : '') + '<section id="sf-products" aria-label="Collection products"></section>' + (ctx.items.length ? toolbar() : '') + tail() + '</div>';
   updateProducts(ctx); bind(ctx);
   const rail=ctx.main.querySelector('.sf-feature-rail');
+  if (!rail) return;
   const updateArrows=()=>{
     ctx.main.querySelector('[data-scroll="-1"]').disabled = rail.scrollLeft<2;
     ctx.main.querySelector('[data-scroll="1"]').disabled = rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-2;

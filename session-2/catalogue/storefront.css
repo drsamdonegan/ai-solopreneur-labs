@@ -79,6 +79,7 @@ body[data-view="store"] #main {max-width:none;width:100%;padding:0;margin:0}
 .sf-no-results,.sf-notfound {grid-column:1/-1;text-align:center;padding:75px 16px}
 .sf-no-results h2,.sf-notfound h1 {font-weight:400}
 .sf-no-results button,.sf-notfound a,.sf-edit {text-decoration:underline;text-underline-offset:3px;margin-top:12px}
+.sf-no-results .sf-solid {display:inline-flex;width:auto;margin-top:22px;text-decoration:none}
 .sf-foot {display:flex;align-items:center;gap:20px;padding:24px var(--sf-margin) 85px;border-top:1px solid var(--sf-line);font-size:13px}
 .sf-foot span {margin-right:auto}
 .sf-foot a {text-decoration:underline}

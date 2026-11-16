@@ -1,6 +1,6 @@
 import { fieldGroups, fields, labels, display, prepare, product, rawForm, referenceTables, validate,
   editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=studio-1';
-import { renderStorefront, renderProduct } from './storefront.js?v=agenda-1';
+import { renderStorefront, renderProduct } from './storefront.js?v=empty-store-1';
 
 const main = document.querySelector('#main');
 const notice = document.querySelector('#notice');
@@ -11,6 +11,7 @@ const originalImages = new Map();
 const editorLabels = { ...labels, description: 'Product description', badge: 'Product badge', colourHex: 'Swatch colour (hex)', imageUrl: 'Image URL', imageUrl2: 'Alternate image URL' };
 let data, tables, prefix, selected, validated = false, listFilter = 'all', search = '';
 let toastTimer, storageRefresh, page = 0;
+let importPreview = [];
 const pageSize = 25;
 
 const icons = {
@@ -54,7 +55,7 @@ function editorialRow(id, base = {}) {
 }
 function getLive(row) {
   const saved = records.get(row.id);
-  return saved?.live || (row.source === 'sample' ? row.base : null);
+  return saved?.live || null;
 }
 function liveItems() {
   return [...index.values()].filter(getLive).sort((a, b) => {
@@ -90,10 +91,9 @@ function snapshot(row) {
 }
 function status(row) {
   const saved = records.get(row.id);
-  if (!saved) return row.source === 'sample' ? 'Published' : 'Inbox';
+  if (!saved) return 'Inbox';
   const live = getLive(row);
-  if (live && !saved.changed && (saved.publishedAt || row.source === 'sample')) return 'Published';
-  if (live && !saved.changed && JSON.stringify(product(row, formFor(row))) === JSON.stringify(live)) return 'Published';
+  if (live && !saved.changed) return 'Published';
   if (needsReview(row) || (!isEditorial(row) && Object.keys(errorsFor(row)).length)) return 'Review';
   if (isEditorial(row) && Object.keys(errorsFor(row)).length) return 'Draft';
   return 'Ready';
@@ -153,9 +153,115 @@ function contentList() {
     '<section class="cf-content"><div class="cf-heading"><div><div class="cf-crumb">Retail catalogue <span>/</span> master</div><h1>Content</h1></div><button type="button" class="cf-primary" data-do="new">' + icon('plus') + ' Add entry</button></div>' +
     '<div class="cf-list-tools"><label class="cf-search">' + icon('search') + '<input id="cf-search" aria-label="Search entries" type="search" placeholder="Search entries" value="' + h(search) + '"></label>' +
     '<select id="cf-filter-select" aria-label="Filter entries">' + filters.map(([val,label]) => '<option value="' + val + '"' + (val === listFilter ? ' selected' : '') + '>' + label + '</option>').join('') + '</select></div>' +
-    '<div class="cf-table-tools"><span id="cf-count"></span><div><button type="button" data-do="batch"' + (!states.includes('Inbox') ? ' disabled' : '') + '>Run batch rules</button><button type="button" data-do="publish-ready"' + (!states.includes('Ready') ? ' disabled' : '') + '>Publish ready drafts</button></div></div>' +
-    '<div class="cf-table-scroll"><table class="cf-table"><thead><tr><th>Title</th><th>Content type</th><th>Source</th><th>Status</th></tr></thead><tbody id="cf-rows"></tbody></table></div><div class="cf-pager"><span id="cf-page"></span><button id="cf-prev" data-do="previous-page">Previous</button><button id="cf-next" data-do="next-page">Next</button></div></section></div>';
+    '<div class="cf-table-tools"><span id="cf-count"></span><div><button type="button" data-do="paste-rows">Paste spreadsheet rows</button><button type="button" data-do="batch"' + (!data.rows.some(row => status(row) === 'Inbox') ? ' disabled' : '') + '>Run batch rules</button><button type="button" data-do="publish-ready"' + (!states.includes('Ready') ? ' disabled' : '') + '>Publish ready drafts</button></div></div>' +
+    '<div class="cf-table-scroll"><table class="cf-table"><thead><tr><th>Title</th><th>Content type</th><th>Source</th><th>Status</th></tr></thead><tbody id="cf-rows"></tbody></table></div><div class="cf-pager"><span id="cf-page"></span><button id="cf-prev" data-do="previous-page">Previous</button><button id="cf-next" data-do="next-page">Next</button></div></section></div>' + importDialog();
   listResults();
+}
+function importDialog() {
+  return '<dialog class="cf-import" id="cf-import" aria-labelledby="cf-import-title"><header><h2 id="cf-import-title">Paste spreadsheet rows</h2><button type="button" data-do="close-import" aria-label="Close spreadsheet import">×</button></header>' +
+    '<p>Copy the header row and products from the workbook’s Storefront Collection sheet. Preview the rows, then import them as drafts.</p>' +
+    '<label for="cf-import-text">Spreadsheet rows</label><textarea id="cf-import-text" spellcheck="false" placeholder="Paste the copied spreadsheet cells here"></textarea>' +
+    '<div id="cf-import-result" role="status" aria-live="polite"></div><footer><button type="button" data-do="preview-import">Preview rows</button><button type="button" data-do="confirm-import" class="cf-primary" disabled>Import drafts</button></footer></dialog>';
+}
+function spreadsheetRows(text) {
+  const rows = [];
+  let row = [], value = '', quoted = false;
+  const input = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n');
+  for (let i = 0; i < input.length; i++) {
+    const char = input[i];
+    if (char === '"' && quoted && input[i + 1] === '"') {
+      value += '"'; i++;
+    } else if (char === '"' && (quoted || value === '')) {
+      quoted = !quoted;
+    } else if (!quoted && (char === '\t' || char === '\n')) {
+      row.push(value); value = '';
+      if (char === '\n') { rows.push(row); row = []; }
+    } else {
+      value += char;
+    }
+  }
+  if (quoted) throw Error('A quoted spreadsheet cell is incomplete. Copy the complete selection again.');
+  if (value || row.length) { row.push(value); rows.push(row); }
+  return rows.filter(cells => cells.some(cell => cell.trim()));
+}
+function previewImport() {
+  importPreview = [];
+  const result = document.getElementById('cf-import-result');
+  const confirm = main.querySelector('[data-do="confirm-import"]');
+  confirm.disabled = true;
+  try {
+    const rows = spreadsheetRows(document.getElementById('cf-import-text').value);
+    const headers = rows.shift()?.map(value => value.trim()) || [];
+    const required = ['id','title','styleCode','colourCode','sizes','stock','price','imageUrl'];
+    if (required.some(key => !headers.includes(key)) || new Set(headers).size !== headers.length) {
+      throw Error('Include the workbook header row with id, title, styleCode, colourCode, sizes, stock, price and imageUrl.');
+    }
+    const allowed = new Set(['id', ...fields.map(([key]) => key), 'imageUrl2','description','badge','colourHex']);
+    if (headers.some(key => !allowed.has(key))) throw Error('Use the original Storefront Collection column headers.');
+    if (!rows.length || rows.length > 2000) throw Error('Paste between 1 and 2,000 product rows.');
+    const ids = new Set(), skus = new Set(), issues = [], entries = [];
+    rows.forEach((cells, position) => {
+      const rowNumber = position + 2;
+      if (cells.length !== headers.length) {
+        issues.push('Row ' + rowNumber + ' has a different number of columns.'); return;
+      }
+      const values = Object.fromEntries(headers.map((key, i) => [key, cells[i].trim()]));
+      const id = values.id;
+      if (!/^[A-Za-z0-9_-]{1,80}$/.test(id) || ids.has(id)) {
+        issues.push('Row ' + rowNumber + ' needs a unique product ID.'); return;
+      }
+      ids.add(id);
+      const row = index.get(id) || editorialRow(id);
+      const form = { ...row.raw, ...values };
+      delete form.id;
+      form.styleCode = form.styleCode.replace(/^0+(?=\d)/, '');
+      form.colourCode = form.colourCode.replace(/^0+(?=\d)/, '');
+      form.stock = display(pieces(form.stock).map(qty => /^\d+$/.test(qty) ? Number(qty) : qty));
+      const normalized = row.source ? editorialForm(row, form) : form;
+      const errors = row.source ? validateEditorial(normalized, location.href) : validate(row, normalized);
+      const rowSkus = pieces(normalized.skus);
+      if (rowSkus.some(sku => skus.has(sku))) errors.skus = 'A size SKU occurs in another pasted row.';
+      for (const sku of rowSkus) skus.add(sku);
+      const names = Object.keys(errors);
+      if (names.length) issues.push(id + ' — ' + names.map(key => errors[key]).join(' '));
+      entries.push({ row, form:normalized });
+    });
+    for (const row of index.values()) {
+      if (!ids.has(row.id) && getLive(row)?.skus?.some(sku => skus.has(sku))) issues.push('A pasted SKU already belongs to published product ' + row.id + '.');
+    }
+    if (issues.length) {
+      result.innerHTML = '<p class="cf-import-error">Check ' + issues.length + ' ' + (issues.length === 1 ? 'issue' : 'issues') + ' before importing.</p><ul>' + issues.slice(0,20).map(issue => '<li>' + h(issue) + '</li>').join('') + '</ul>';
+      return;
+    }
+    importPreview = entries;
+    result.textContent = entries.length + ' products · ' + skus.size + ' size SKUs ready to import as drafts.';
+    confirm.disabled = false;
+  } catch (error) {
+    result.textContent = error.message;
+  }
+}
+function importDrafts() {
+  if (!importPreview.length) return;
+  const previous = importPreview.map(({row}) => [row.id, read(row.id)]);
+  const created = [];
+  try {
+    for (const {row,form} of importPreview) {
+      if (!index.has(row.id)) { index.set(row.id,row); created.push(row.id); }
+      write(row, { ...read(row.id), form, reviewed:false, custom:row.source === 'custom', changed:true, updatedAt:Date.now() });
+    }
+  } catch (error) {
+    for (const [id] of previous) localStorage.removeItem(prefix + id);
+    for (const [id,record] of previous) {
+      if (record) localStorage.setItem(prefix + id, JSON.stringify(record));
+      loadRecord(id);
+    }
+    for (const id of created) index.delete(id);
+    document.getElementById('cf-import-result').textContent = 'The import could not finish. Your previous products are unchanged. ' + error.message;
+    return;
+  }
+  const count = importPreview.length;
+  importPreview = []; listFilter = 'Ready'; page = 0;
+  contentList(); say(count + ' drafts imported. Review them, then choose Publish ready drafts.');
 }
 const mainFields = ['title','price','salePrice','imageUrl','imageUrl2','description'];
 const editGroups = [
@@ -213,7 +319,7 @@ function editor(row) {
     '<form id="entry-form" class="cf-form" novalidate>' + mainFields.map(k => field(row,k,errors)).join('') + variantSections + reviewBox(row) +
     '<div class="cf-form-end"><button type="button" data-do="check">Check fields</button><button type="button" data-do="save">Save draft</button></div></form></section>' +
     '<aside class="cf-sidebar"><div class="cf-tabs"><span>General</span></div><div class="cf-side-body"><section><h3>Status</h3><p class="cf-state-line">Current <span id="entry-state">' + statusMarkup(row) + '</span></p>' +
-    '<button class="cf-publish" type="submit" form="entry-form">Publish ' + (saved?.live || row.source === 'sample' ? 'changes' : 'entry') + '</button><p class="cf-side-small" id="cf-save-state">' + (saved ? 'All changes saved' : row.source === 'sample' ? 'Published to your storefront' : 'Draft in this browser') + '</p></section>' +
+    '<button class="cf-publish" type="submit" form="entry-form">Publish ' + (live ? 'changes' : 'entry') + '</button><p class="cf-side-small" id="cf-save-state">' + (saved ? 'All changes saved' : 'Draft in this browser') + '</p></section>' +
     '<section><h3>Storefront</h3><div class="cf-cover" id="cf-cover">' + picture(f.imageUrl,'Product image preview') + '</div>' +
     (live ? '<a class="cf-secondary cf-full" href="' + publishedLink(row) + '">Open published entry ' + icon('external') + '</a>' : '<p class="cf-side-small">Publish this entry to display it in the collection.</p>') + '</section>' +
     (!row.source ? '<section><h3>Supplier workbook</h3><p class="cf-side-small">Row ' + h(row.id) + '</p><button type="button" class="cf-full" data-do="prepare">Apply row rules</button><label class="cf-mode"><span>Validation</span><select id="cf-validation"><option value="workbook"' + (!editorial ? ' selected' : '') + '>Match workbook references</option><option value="editorial"' + (editorial ? ' selected' : '') + '>Editorial entry</option></select></label><a class="cf-inline-link" href="weekly-drop.xlsx" download>Download workbook</a></section>' : '') +
@@ -221,8 +327,6 @@ function editor(row) {
 }
 function save(form, options = {}) {
   const old = read(selected.id) || {};
-  // Seeded products have an immutable initial publication. Keep that snapshot as
-  // their first draft changes, just like products published during the workshop.
   write(selected, { ...old, ...options, form, custom: selected.source === 'custom', changed:true, updatedAt:Date.now() });
 }
 function takeForm() {
@@ -235,6 +339,10 @@ function publish(row) {
   return true;
 }
 function handleAction(action) {
+  if (action === 'paste-rows') { importPreview = []; document.getElementById('cf-import').showModal(); return; }
+  if (action === 'close-import') { document.getElementById('cf-import').close(); return; }
+  if (action === 'preview-import') { previewImport(); return; }
+  if (action === 'confirm-import') { importDrafts(); return; }
   if (action === 'previous-page' || action === 'next-page') {
     page += action === 'next-page' ? 1 : -1;
     listResults(); document.querySelector('.cf-heading').scrollIntoView({block:'start'}); return;
@@ -263,7 +371,7 @@ function handleAction(action) {
     contentList(); say(n + ' entries published to the storefront.'); return;
   }
   if (action === 'reset') {
-    if (!window.confirm('Reset this browser’s workshop? This clears your drafts and restores the original collection.')) return;
+    if (!window.confirm('Reset this browser’s workshop? This clears your drafts and published products, leaving the storefront empty.')) return;
     for (const row of index.values()) {
       localStorage.removeItem(prefix + row.id);
       if (row.source === 'custom') index.delete(row.id);
@@ -331,6 +439,12 @@ main.addEventListener('change',event => {
 });
 main.addEventListener('input', event => {
   const el = event.target;
+  if (el.id === 'cf-import-text') {
+    importPreview = [];
+    main.querySelector('[data-do="confirm-import"]').disabled = true;
+    document.getElementById('cf-import-result').textContent = '';
+    return;
+  }
   if (el.id === 'cf-search') { search = el.value; page = 0; listResults(); return; }
   if (!el.name || el.form?.id !== 'entry-form') return;
   save(takeForm(),selected.review.includes(el.name) ? {reviewed:false} : {});
