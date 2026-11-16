@@ -301,6 +301,31 @@ window.LAB2 = {
       "note": "Open the practice account from this tab. For a group exercise, use the fictional lines and supplied practice evidence. The local presenter edition opens on the six Zeller lines. To use them in another browser, choose Switch / import statement and select the private presenter JSON. Give a browser-enabled agent the prompt from the Agent brief tab and access to the same browser session. Demonstrate one row by hand before letting the agent continue. Compare the final open queue with the agent’s report. In the fictional sample, inspect Finch Bench Studio for a match. Compare invoice FBS-184 against the existing bill payment and the stale suggestion. Open Reconciled and verify the saved record. For an open item, read the note on Tidegate Pay and ask what evidence would identify the merchant."
     },
     {
+      "n": 28,
+      "title": "Let’s Practice",
+      "subtitle": "",
+      "kind": "divider",
+      "tabs": [],
+      "note": "Pause the examples here and invite everyone to choose a task from their own business. On the next slide, give them a moment to jot down one task before going around the room."
+    },
+    {
+      "n": 29,
+      "title": "What would you hand to AI?",
+      "subtitle": "Jot down one task. Then share it with the room.",
+      "tabs": [
+        {
+          "label": "Choose your task",
+          "type": "practiceRound",
+          "questions": [
+            "What weekly business process do you dread?",
+            "What could AI take off your plate?",
+            "What would help you feel more organised?"
+          ]
+        }
+      ],
+      "note": "Give everyone a quiet moment to jot down one real task they would like AI to do. It might be an annoying or frustrating business process they repeat each week, something they want taken off their plate, or something that would help them feel more organised. Go around the room and invite each person to share their task and the result they would like. Use these tasks for the hands-on practice that follows."
+    },
+    {
       "n": 11,
       "title": "Create Your Own Skill",
       "subtitle": "Turn trusted writing advice into reusable guidance against AI slop",

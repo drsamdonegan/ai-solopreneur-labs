@@ -15,6 +15,7 @@
     }).join('') + (depth ? '</span>' : '');
   }
   function panel(tab){
+    if(tab.type==='practiceRound')return `<div class="practice-round"><ul class="practice-questions">${tab.questions.map(question=>`<li>${esc(question)}</li>`).join('')}</ul><div class="practice-note"><p>I’d like AI to…</p><div class="practice-writing-lines" aria-hidden="true"><span></span><span></span><span></span></div><strong>We’ll practise with your task next.</strong></div></div>`;
     if(tab.type==='bankEvidence')return `<div class="bank-trace">
       <figure class="bank-line"><figcaption>Practice bank statement</figcaption><p>${esc(tab.date)} · Money spent</p><strong>${esc(tab.payee)}</strong><div class="bank-amount">${esc(tab.amount)} <small>AUD</small></div><p class="bank-reference">Reference <b>${esc(tab.reference)}</b></p></figure>
       <ol class="bank-sources">

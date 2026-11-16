@@ -21,6 +21,14 @@ body.lab2-native {
 .lab2-native .layout-lab2-content.redesigned.section-divider .slide-copy {left:10cqw;top:50%;width:80cqw;transform:translateY(-50%);text-align:center}
 .lab2-native .slide.redesigned.section-divider .slide-copy h1 {margin:0;color:var(--cream);font-size:9.2cqw;line-height:1.02;letter-spacing:-.045em}
 .lab2-native .section-divider footer b {color:var(--cream)}
+.lab2-native .practice-round {display:grid;grid-template-columns:1.2fr 1fr;gap:5cqw;align-items:center;height:100%}
+.lab2-native .practice-questions {display:grid;gap:2.5cqw;margin:0;padding:0;list-style:none}
+.lab2-native .practice-questions li {border-left:.25cqw solid var(--rust);padding-left:1.4cqw;color:var(--brown);font:550 2.25cqw/1.25 var(--body-font)}
+.lab2-native .practice-note {padding:3cqw;background:var(--card);border-top:.35cqw solid var(--teal);box-shadow:0 1.2cqw 3cqw #30241f12}
+.lab2-native .practice-note p {margin:0;color:var(--ink);font:500 3.5cqw/1.1 var(--title-font)}
+.lab2-native .practice-writing-lines {display:grid;gap:2.7cqw;margin:2.4cqw 0}
+.lab2-native .practice-writing-lines span {height:1px;background:color-mix(in srgb,var(--brown) 25%,transparent)}
+.lab2-native .practice-note strong {color:var(--teal);font:650 1.35cqw/1.35 var(--body-font)}
 .lab2-native .layout-lab-hero.redesigned .slide-copy{left:5cqw;top:22cqh;width:43cqw}
 .lab2-native .layout-lab-hero.redesigned .slide-copy h1{font-size:6.125cqw;line-height:.96}
 .lab2-native .layout-lab-hero.redesigned .subtitle{font-size:1.4375cqw;max-width:none;white-space:normal}
