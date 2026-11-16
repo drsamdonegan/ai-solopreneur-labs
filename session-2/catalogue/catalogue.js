@@ -1,6 +1,6 @@
 import { fieldGroups, fields, labels, display, prepare, product, rawForm, referenceTables, validate,
   editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=studio-1';
-import { renderStorefront, renderProduct } from './storefront.js?v=section-break-1';
+import { renderStorefront, renderProduct } from './storefront.js?v=agenda-1';
 
 const main = document.querySelector('#main');
 const notice = document.querySelector('#notice');
@@ -112,7 +112,7 @@ function cfHeader(section) {
   return '<header class="cf-top"><a class="cf-brand" href="#cms" aria-label="Catalogue Studio home"><i class="cf-mark" aria-hidden="true"></i><strong>Catalogue Studio</strong></a><span class="cf-top-divider"></span>' +
     '<a class="cf-space" href="#cms">' + icon('grid') + ' Retail catalogue</a><span class="cf-env">master</span>' +
     '<div class="cf-top-links"><a href="#cms" ' + (section === 'content' ? 'aria-current="page"' : '') + '>' + icon('content') + ' Content</a><a href="#store">' + icon('storefront') + ' Storefront</a></div>' +
-    '<a class="cf-deck" href="../#slide-14">Workshop slides ' + icon('external') + '</a></header>';
+    '<a class="cf-deck" href="../#slide-17">Workshop slides ' + icon('external') + '</a></header>';
 }
 const filters = [['all','All entries'],['collection','Collection products'],['workbook','Weekly drop'],['Review','Needs review'],['Ready','Ready to publish'],['Published','Published'],['Draft','Drafts']];
 function matches(row, filter, state) {
@@ -395,7 +395,7 @@ async function start() {
     window.addEventListener('hashchange',() => { route(); window.scrollTo(0,0); });
     route();
   } catch (error) {
-    main.innerHTML = '<div class="cf-error"><h1>Workspace unavailable</h1><p>' + h(error.message) + '</p><a href="../#slide-14">Return to the workshop</a></div>';
+    main.innerHTML = '<div class="cf-error"><h1>Workspace unavailable</h1><p>' + h(error.message) + '</p><a href="../#slide-17">Return to the workshop</a></div>';
   }
 }
 start();

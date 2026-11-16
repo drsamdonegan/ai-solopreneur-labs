@@ -48,6 +48,45 @@ window.LAB2 = {
       "revised": true
     },
     {
+      "n": 31,
+      "title": "Here's what you're going to learn",
+      "subtitle": "",
+      "tabs": [
+        {
+          "label": "Learning outcomes",
+          "type": "outcomeList",
+          "items": [
+            "Connect your email, files and calendar",
+            "Set permissions and check the evidence",
+            "Turn a multi-step business process into an AI workflow",
+            "Create reusable skills and emails that sound like you",
+            "Schedule summaries, briefings and follow-ups"
+          ]
+        }
+      ],
+      "note": "Introduce these five outcomes before showing the agenda. The core exercises cover connections, writing guidance, complex workflows and scheduled tasks. Participants choose the optional follow-on agent that best fits their business."
+    },
+    {
+      "n": 32,
+      "title": "Agenda",
+      "subtitle": "1–6 p.m.",
+      "tabs": [
+        {
+          "label": "This afternoon",
+          "type": "workshopAgenda",
+          "rows": [
+            { "time": "1:00–2:30", "topic": "Connections, permissions & writing guidance" },
+            { "time": "2:30–2:40", "topic": "Break · 10 minutes", "break": true },
+            { "time": "2:40–4:10", "topic": "Complex workflows & hands-on practice" },
+            { "time": "4:10–4:20", "topic": "Break · 10 minutes", "break": true },
+            { "time": "4:20–5:50", "topic": "Scheduled tasks & your own agent" },
+            { "time": "5:50–6:00", "topic": "Share results & recap" }
+          ]
+        }
+      ],
+      "note": "Use this as a flexible five-hour plan. From 1:00 to 1:10, welcome the group, carry Lab 1 forward and introduce the outcomes. Allow about 30 minutes for connections, permissions and browser setup, 40 minutes for writing-profile prompts and checking results, and 10 minutes to discuss AI slop. Break from 2:30 to 2:40. From 2:40 to 3:05, demonstrate the weekly product drop. From 3:05 to 3:25, trace the receipt and practise bank reconciliation. Use 3:25 to 3:35 to jot down tasks and go around the room, then 3:35 to 4:10 for personal practice, skill creation and email drafts. Break from 4:10 to 4:20. Allow 20 minutes for the scheduled inbox summary and 20 minutes to design a recurring task. From 5:00 to 5:35, participants choose an optional agent and practise with support. Use 5:35 to 5:50 for session organisation, mobile access and final checks. From 5:50 to 6:00, share results and use the closing recap. Adapt the exercises to the group's pace while keeping the two breaks."
+    },
+    {
       "n": 4,
       "title": "Connect Tools Safely",
       "subtitle": "Add access before asking Claude to use it",
@@ -236,6 +275,14 @@ window.LAB2 = {
       "revised": true
     },
     {
+      "n": 33,
+      "title": "Break",
+      "subtitle": "10 minutes · Back at 2:40 p.m.",
+      "kind": "break",
+      "tabs": [],
+      "note": "Pause around 2:30 p.m., after the first 90-minute block on connections, permissions and writing guidance. Resume at 2:40 p.m. with Complex AI Workflows and the two business-process examples."
+    },
+    {
       "n": 27,
       "title": "Complex AI Workflows",
       "subtitle": "",
@@ -385,6 +432,14 @@ window.LAB2 = {
       ],
       "note": "Draft two replies for review. Challenge one line that sounds wrong and verify the evidence Claude points to. If the writing profile encouraged the problem, correct the profile and try the draft again.",
       "revised": true
+    },
+    {
+      "n": 34,
+      "title": "Break",
+      "subtitle": "10 minutes · Back at 4:20 p.m.",
+      "kind": "break",
+      "tabs": [],
+      "note": "Pause around 4:10 p.m., after the second 90-minute block on complex workflows, the group task discussion, skill creation and email practice. Resume at 4:20 p.m. with Scheduled Tasks."
     },
     {
       "n": 30,
@@ -743,6 +798,25 @@ window.LAB2 = {
         "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork"
       ],
       "revised": true
+    },
+    {
+      "n": 35,
+      "title": "Here is what we did today",
+      "subtitle": "",
+      "tabs": [
+        {
+          "label": "Recap",
+          "type": "outcomeList",
+          "items": [
+            "Connected email, files and calendars",
+            "Set permissions and checked the evidence",
+            "Worked through multi-step business workflows",
+            "Created skills and refined email drafts",
+            "Designed scheduled tasks for recurring work"
+          ]
+        }
+      ],
+      "note": "Use the final ten minutes, from 5:50 to 6:00 p.m., to reinforce the five learning outcomes. Invite participants to share a result from their own task and explain what evidence or review made them confident in it. Ask which workflow they will keep using after today. Close at 6:00 p.m."
     }
   ],
   "title": "Lab 2: Project Management Assistant"

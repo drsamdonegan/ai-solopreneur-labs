@@ -73,7 +73,7 @@ function shell() {
     '<button type="button" data-sf="menu" class="sf-menu-toggle" aria-label="Browse departments">' + icon('menu') + '</button></div></header>';
 }
 function tail() {
-  return '<div class="sf-foot"><span>Workshop storefront</span><a href="#cms">Open catalogue CMS</a><a href="../#slide-14">Workshop slides</a></div>' +
+  return '<div class="sf-foot"><span>Workshop storefront</span><a href="#cms">Open catalogue CMS</a><a href="../#slide-17">Workshop slides</a></div>' +
     '<dialog class="sf-sheet" aria-labelledby="sf-sheet-title"><div class="sf-sheet-head"><h2 id="sf-sheet-title"></h2>' + toggle('close','Close panel') + '</div><div class="sf-sheet-body"></div></dialog>';
 }
 function matchesNav(item, selection) {

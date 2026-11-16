@@ -21,6 +21,18 @@ body.lab2-native {
 .lab2-native .layout-lab2-content.redesigned.section-divider .slide-copy {left:10cqw;top:50%;width:80cqw;transform:translateY(-50%);text-align:center}
 .lab2-native .slide.redesigned.section-divider .slide-copy h1 {margin:0;color:var(--cream);font-size:9.2cqw;line-height:1.02;letter-spacing:-.045em}
 .lab2-native .section-divider footer b {color:var(--cream)}
+.lab2-native .slide.redesigned.workshop-break .slide-copy .subtitle {display:block;margin-top:1.8cqw;color:var(--cream);font:500 2.4cqw/1.35 var(--body-font)}
+.lab2-native .slide:has(.workshop-outcomes) .slide-copy h1 {font-size:5cqw;line-height:1.05}
+.lab2-native .workshop-outcomes {display:flex;flex-direction:column;justify-content:center;gap:1.7cqw;height:100%;margin:0;padding:0;list-style:none}
+.lab2-native .workshop-outcomes li {padding-left:1.5cqw;border-left:.25cqw solid var(--rust);color:var(--ink);font:550 2.15cqw/1.3 var(--body-font)}
+.lab2-native .workshop-agenda {width:100%;height:100%;border-collapse:collapse;color:var(--ink);font:550 1.9cqw/1.3 var(--body-font)}
+.lab2-native .workshop-agenda th {width:20cqw;text-align:left;font-weight:650;white-space:nowrap}
+.lab2-native .workshop-agenda td {padding-left:1.5cqw}
+.lab2-native .workshop-agenda th,
+.lab2-native .workshop-agenda td {padding-top:1cqw;padding-bottom:1cqw;border-bottom:1px solid color-mix(in srgb,var(--brown) 25%,transparent)}
+.lab2-native .workshop-agenda .agenda-break {color:var(--teal);font-size:1.5cqw}
+.lab2-native .workshop-agenda tr:last-child th,
+.lab2-native .workshop-agenda tr:last-child td {border-bottom:0}
 .lab2-native .practice-round {display:grid;grid-template-columns:1.2fr 1fr;gap:5cqw;align-items:center;height:100%}
 .lab2-native .practice-questions {display:grid;gap:2.5cqw;margin:0;padding:0;list-style:none}
 .lab2-native .practice-questions li {border-left:.25cqw solid var(--rust);padding-left:1.4cqw;color:var(--brown);font:550 2.25cqw/1.25 var(--body-font)}

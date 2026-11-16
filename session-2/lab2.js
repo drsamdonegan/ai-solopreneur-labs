@@ -15,6 +15,8 @@
     }).join('') + (depth ? '</span>' : '');
   }
   function panel(tab){
+    if(tab.type==='outcomeList')return `<ul class="workshop-outcomes">${tab.items.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`;
+    if(tab.type==='workshopAgenda')return `<table class="workshop-agenda" aria-label="Workshop agenda, 1 to 6 p.m."><tbody>${tab.rows.map(row=>`<tr${row.break?' class="agenda-break"':''}><th scope="row">${esc(row.time)}</th><td>${esc(row.topic)}</td></tr>`).join('')}</tbody></table>`;
     if(tab.type==='practiceRound')return `<div class="practice-round"><ul class="practice-questions">${tab.questions.map(question=>`<li>${esc(question)}</li>`).join('')}</ul><div class="practice-note"><p>I’d like AI to…</p><div class="practice-writing-lines" aria-hidden="true"><span></span><span></span><span></span></div><strong>We’ll practise with your task next.</strong></div></div>`;
     if(tab.type==='bankEvidence')return `<div class="bank-trace">
       <figure class="bank-line"><figcaption>Practice bank statement</figcaption><p>${esc(tab.date)} · Money spent</p><strong>${esc(tab.payee)}</strong><div class="bank-amount">${esc(tab.amount)} <small>AUD</small></div><p class="bank-reference">Reference <b>${esc(tab.reference)}</b></p></figure>
@@ -85,7 +87,8 @@ if(tab.type==='permissionShot')return `<div class="interface-layout permission-i
   const sections=[...document.querySelectorAll('.slide')];
   sections.forEach((section,i)=>{
     section.classList.add('redesigned');section.dataset.opsSlide=String(i+1);
-    section.classList.toggle('section-divider',slides[i].kind==='divider');
+    section.classList.toggle('section-divider',['divider','break'].includes(slides[i].kind));
+    section.classList.toggle('workshop-break',slides[i].kind==='break');
     if(!['hero','map'].includes(slides[i].kind))section.querySelector('.visual-stage').innerHTML=content(slides[i]);
     if(slides[i].kind==='hero'){
       const image=section.querySelector('.slide-image'),frame=document.createElement('figure');frame.className='ops-hero-art';image.before(frame);frame.append(image);
