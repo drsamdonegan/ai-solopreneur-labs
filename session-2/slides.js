@@ -48,63 +48,6 @@ window.LAB2 = {
       "revised": true
     },
     {
-      "n": 24,
-      "title": "The weekly product drop",
-      "subtitle": "Every week, 100 rows arrive in Excel. How much of the work can you hand to an agent?",
-      "tabs": [
-        {
-          "label": "Try the workflow",
-          "type": "catalogueWorkshop"
-        },
-        {
-          "label": "Agent brief",
-          "type": "prompt",
-          "guide": ["Attach the weekly Excel file", "Open the practice CMS", "Review the exceptions"],
-          "prompt": "Prepare this week’s product drop in the practice catalogue CMS at https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/. Use the attached weekly-drop.xlsx and its reference sheets.\n\nFor each row, trim the style and colour codes, strip their leading zeros and join them with an underscore. Append an underscore and the size to make each SKU. Standardise the title, prices and stock, and map the merchandising fields into the CMS.\n\nCompare the product image with the garment and colour in the title. If the price, image or another field conflicts with its reference, hold the row and tell me exactly what needs checking.\n\nPublish the verified listings in this practice storefront. Open each listing and select each size. Check its SKU, title, price, photo and stock against the workbook. Report the number of listings published, SKUs checked and rows held, with the reason for each exception."
-        }
-      ],
-      "note": "Download the workbook and try the first row by hand. Open the CMS alongside Excel, convert the raw codes to a listing key, and confirm the image and prices before publishing. In the shop, switch from XS to XL. The SKU suffix and stock change, while the crimson skirt and its $89.90 price stay the same. Next, try the batch rules and open R003. The supplier labels it Moss but the image shows a crimson skirt. Compare the two images, find the approved URL in the workbook’s Asset Library, and correct the CMS entry. For the agent exercise, give the workbook and agent brief to a browser-enabled agent. Compare the rows that can be published with the exceptions that need someone to investigate. Each attendee’s practice catalogue is saved in their own browser."
-    },
-    {
-      "n": 25,
-      "title": "What was this payment for?",
-      "subtitle": "Follow one bank line from a short reference to a business purpose.",
-      "tabs": [
-        {
-          "label": "Trace the payment",
-          "type": "bankEvidence",
-          "payee": "Mallow Street Kitchen",
-          "amount": "$693.00",
-          "date": "11 May 2026",
-          "reference": "MSK-217",
-          "receipt": "Receipt MSK-217 lists 30 lunch packs for $693, including $63 GST.",
-          "context": "A Slack delivery message and the Dockside Design Forum calendar event explain who the lunches were for.",
-          "match": "Check Find & Match first. With no existing bill, create the catering expense and attach MSK-217."
-        }
-      ],
-      "note": "Ask what the statement alone tells us about this $693 payment. In the fictional Evidence desk, find the receipt for 30 lunch packs. It shows $630 plus $63 GST. Use the delivery message and calendar event to link the lunch to Dockside Design Forum. An event on the same day alone would leave the customer or project uncertain. Open Find & Match before creating anything. An existing bill would only need matching. Here, create the event catering expense, track Dockside Design Forum and save the receipt."
-    },
-    {
-      "n": 26,
-      "title": "Reconcile the practice account",
-      "subtitle": "Give your agent six statement lines. Review what it cleared and what still needs an answer.",
-      "tabs": [
-        {
-          "label": "Practice account",
-          "type": "bankWorkshop"
-        },
-        {
-          "label": "Agent brief",
-          "type": "prompt",
-          "practicePath": "reconciliation/",
-          "guide": ["Work one line at a time", "Save the evidence", "Check the open items"],
-          "size": "reconciliation",
-          "prompt": "Open {practiceUrl} in this browser. Work one line at a time. Use the Evidence desk for sample lines. For the presenter statement, search my email receipts, Slack and Google Calendar read-only. Save changes only in the practice account.\n\nCheck the payee, date, direction, amount, currency and reference. Try Find & Match first. Create only if no record exists and the evidence supports the category and purpose. Set tax and tracking only when documented.\n\nUnder Add details, cite the source and attach any receipt. If unsure, save a Discuss note with the likely purpose and missing evidence. Keep the line open. Verify and report the counts matched, created and still open, with one question per open line."
-        }
-      ],
-      "note": "Open the practice account from this tab. For a group exercise, use the fictional lines and supplied practice evidence. The local presenter edition opens on the six Zeller lines. To use them in another browser, choose Switch / import statement and select the private presenter JSON. Give a browser-enabled agent the prompt from the Agent brief tab and access to the same browser session. Demonstrate one row by hand before letting the agent continue. Compare the final open queue with the agent’s report. In the fictional sample, inspect Finch Bench Studio for a match. Compare invoice FBS-184 against the existing bill payment and the stale suggestion. Open Reconciled and verify the saved record. For an open item, read the note on Tidegate Pay and ask what evidence would identify the merchant."
-    },
-    {
       "n": 4,
       "title": "Connect Tools Safely",
       "subtitle": "Add access before asking Claude to use it",
@@ -291,6 +234,63 @@ window.LAB2 = {
       ],
       "note": "AI slop can sound polished while leaning on stock phrases and shallow personalisation. This email mentions specific details but never gives Juan a reason to reply. Dashes are a style choice and cannot tell you who wrote an email.",
       "revised": true
+    },
+    {
+      "n": 24,
+      "title": "The weekly product drop",
+      "subtitle": "Every week, 100 rows arrive in Excel. How much of the work can you hand to an agent?",
+      "tabs": [
+        {
+          "label": "Try the workflow",
+          "type": "catalogueWorkshop"
+        },
+        {
+          "label": "Agent brief",
+          "type": "prompt",
+          "guide": ["Attach the weekly Excel file", "Open the practice CMS", "Review the exceptions"],
+          "prompt": "Prepare this week’s product drop in the practice catalogue CMS at https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/. Use the attached weekly-drop.xlsx and its reference sheets.\n\nFor each row, trim the style and colour codes, strip their leading zeros and join them with an underscore. Append an underscore and the size to make each SKU. Standardise the title, prices and stock, and map the merchandising fields into the CMS.\n\nCompare the product image with the garment and colour in the title. If the price, image or another field conflicts with its reference, hold the row and tell me exactly what needs checking.\n\nPublish the verified listings in this practice storefront. Open each listing and select each size. Check its SKU, title, price, photo and stock against the workbook. Report the number of listings published, SKUs checked and rows held, with the reason for each exception."
+        }
+      ],
+      "note": "Download the workbook and try the first row by hand. Open the CMS alongside Excel, convert the raw codes to a listing key, and confirm the image and prices before publishing. In the shop, switch from XS to XL. The SKU suffix and stock change, while the crimson skirt and its $89.90 price stay the same. Next, try the batch rules and open R003. The supplier labels it Moss but the image shows a crimson skirt. Compare the two images, find the approved URL in the workbook’s Asset Library, and correct the CMS entry. For the agent exercise, give the workbook and agent brief to a browser-enabled agent. Compare the rows that can be published with the exceptions that need someone to investigate. Each attendee’s practice catalogue is saved in their own browser."
+    },
+    {
+      "n": 25,
+      "title": "What was this payment for?",
+      "subtitle": "Follow one bank line from a short reference to a business purpose.",
+      "tabs": [
+        {
+          "label": "Trace the payment",
+          "type": "bankEvidence",
+          "payee": "Mallow Street Kitchen",
+          "amount": "$693.00",
+          "date": "11 May 2026",
+          "reference": "MSK-217",
+          "receipt": "Receipt MSK-217 lists 30 lunch packs for $693, including $63 GST.",
+          "context": "A Slack delivery message and the Dockside Design Forum calendar event explain who the lunches were for.",
+          "match": "Check Find & Match first. With no existing bill, create the catering expense and attach MSK-217."
+        }
+      ],
+      "note": "Ask what the statement alone tells us about this $693 payment. In the fictional Evidence desk, find the receipt for 30 lunch packs. It shows $630 plus $63 GST. Use the delivery message and calendar event to link the lunch to Dockside Design Forum. An event on the same day alone would leave the customer or project uncertain. Open Find & Match before creating anything. An existing bill would only need matching. Here, create the event catering expense, track Dockside Design Forum and save the receipt."
+    },
+    {
+      "n": 26,
+      "title": "Reconcile the practice account",
+      "subtitle": "Give your agent six statement lines. Review what it cleared and what still needs an answer.",
+      "tabs": [
+        {
+          "label": "Practice account",
+          "type": "bankWorkshop"
+        },
+        {
+          "label": "Agent brief",
+          "type": "prompt",
+          "practicePath": "reconciliation/",
+          "guide": ["Work one line at a time", "Save the evidence", "Check the open items"],
+          "size": "reconciliation",
+          "prompt": "Open {practiceUrl} in this browser. Work one line at a time. Use the Evidence desk for sample lines. For the presenter statement, search my email receipts, Slack and Google Calendar read-only. Save changes only in the practice account.\n\nCheck the payee, date, direction, amount, currency and reference. Try Find & Match first. Create only if no record exists and the evidence supports the category and purpose. Set tax and tracking only when documented.\n\nUnder Add details, cite the source and attach any receipt. If unsure, save a Discuss note with the likely purpose and missing evidence. Keep the line open. Verify and report the counts matched, created and still open, with one question per open line."
+        }
+      ],
+      "note": "Open the practice account from this tab. For a group exercise, use the fictional lines and supplied practice evidence. The local presenter edition opens on the six Zeller lines. To use them in another browser, choose Switch / import statement and select the private presenter JSON. Give a browser-enabled agent the prompt from the Agent brief tab and access to the same browser session. Demonstrate one row by hand before letting the agent continue. Compare the final open queue with the agent’s report. In the fictional sample, inspect Finch Bench Studio for a match. Compare invoice FBS-184 against the existing bill payment and the stale suggestion. Open Reconciled and verify the saved record. For an open item, read the note on Tidegate Pay and ask what evidence would identify the merchant."
     },
     {
       "n": 11,
