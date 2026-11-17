@@ -498,6 +498,17 @@ window.LAB2 = {
           "type": "createSkillIntro"
         },
         {
+          "label": "Template",
+          "type": "prompt",
+          "guide": [
+            "Choose your connections",
+            "Write your task and steps",
+            "Add good and bad examples",
+            "Define and run your test"
+          ],
+          "prompt": "I want you to connect the following tools for this task.\n- [Tool or connector 1] to [read, draft or update these items].\n- [Tool or connector 2] to [read, draft or update these items].\n\nI want you to [describe the business task] for [business or team]. Start when [trigger or input arrives] and produce [finished result] in [destination]. Use /skill-creator to turn this workflow into a reusable skill called [skill name].\n\nHere are the steps I usually follow.\n1. [First action and what I check].\n2. [Next action and the decision I make].\n3. [Final action and how I confirm the task is finished].\n\nHere is an example input.\n[Paste a typical request, record or source material].\n\nHere is the perfect final result for that input.\n[Paste the result I would accept].\n\nHere is a result that came out wrong for the same input.\n[Paste an incorrect result].\nIt is wrong because [explain the mistake and the rule it breaks].\n\nTest the skill using [test input] and [a case with missing or unusual information]. Use [tools, files or checks available for testing]. Compare the outputs with [expected results or acceptance checks]. Show what passed, what failed and any questions. Fix the instructions and rerun any failed tests."
+        },
+        {
           "label": "Practice",
           "type": "prompt",
           "prompt": "Open and read this article: https://www.writewide.com/5-steps-to-avoid-the-ai-clone-crisis-and-keep-your-brand-voice-alive/\n\nIdentify what the author recommends for removing AI slop and keeping a distinctive voice. Summarise their recommendations in your own words. If you cannot access the article, ask me to provide it before continuing.\n\nUse /skill-creator to turn those recommendations into a reusable skill called [choose a skill name]. Base its rules and checks on the article. Include the source link so I can trace the advice. Show me the draft and wait for my approval before saving it.",
