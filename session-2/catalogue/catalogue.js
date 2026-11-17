@@ -1,6 +1,6 @@
 import { fields, labels, display, product, validate,
   editorialForm, imageSource, pieces, validateEditorial } from './rules.js?v=empty-store-2';
-import { renderStorefront, renderProduct } from './storefront.js?v=supplier-1';
+import { renderStorefront, renderProduct } from './storefront.js?v=reset-demo-1';
 
 const main = document.querySelector('#main');
 const notice = document.querySelector('#notice');
@@ -108,7 +108,7 @@ function cfHeader(section) {
   return '<header class="cf-top"><a class="cf-brand" href="#cms" aria-label="Catalogue Studio home"><i class="cf-mark" aria-hidden="true"></i><strong>Catalogue Studio</strong></a><span class="cf-top-divider"></span>' +
     '<a class="cf-space" href="#cms">' + icon('grid') + ' Retail catalogue</a><span class="cf-env">master</span>' +
     '<div class="cf-top-links"><a href="#cms" ' + (section === 'content' ? 'aria-current="page"' : '') + '>' + icon('content') + ' Content</a><a href="#store">' + icon('storefront') + ' Storefront</a></div>' +
-    '<a class="cf-deck" href="../#slide-17">Workshop slides ' + icon('external') + '</a></header>';
+    '<a class="cf-deck" href="../#slide-17">Workshop slides ' + icon('external') + '</a><button type="button" data-do="reset">Reset demo</button></header>';
 }
 const filters = [['all','All entries'],['workbook','Weekly drop'],['Review','Needs review'],['Ready','Ready to publish'],['Published','Published'],['Draft','Drafts']];
 function matches(row, filter, state) {
@@ -144,7 +144,7 @@ function contentList() {
   const applicable = (filter) => all.filter((row,i) => matches(row,filter,states[i])).length;
   const filterButtons = filters.map(([value,label]) => '<button type="button" class="cf-filter' + (listFilter === value ? ' cf-active' : '') + '" data-filter="' + value + '"' + (listFilter === value ? ' aria-current="true"' : '') + '><span>' + h(label) + '</span><small>' + applicable(value) + '</small></button>').join('');
   main.innerHTML = cfHeader('content') + '<div class="cf-list-shell"><aside class="cf-views"><h2>Views</h2>' + filterButtons +
-    '<div class="cf-view-bottom"><a href="worksheet.html" target="_blank" rel="noopener">' + icon('sheets') + ' Open worksheet ↗</a><button type="button" data-do="reset">Reset workshop</button><small>Saved in this browser</small></div></aside>' +
+    '<div class="cf-view-bottom"><a href="worksheet.html" target="_blank" rel="noopener">' + icon('sheets') + ' Open worksheet ↗</a><small>Saved in this browser</small></div></aside>' +
     '<section class="cf-content"><div class="cf-heading"><div><div class="cf-crumb">Retail catalogue <span>/</span> master</div><h1>Content</h1></div><button type="button" class="cf-primary" data-do="new">' + icon('plus') + ' Add entry</button></div>' +
     '<div class="cf-list-tools"><label class="cf-search">' + icon('search') + '<input id="cf-search" aria-label="Search entries" type="search" placeholder="Search entries" value="' + h(search) + '"></label>' +
     '<select id="cf-filter-select" aria-label="Filter entries">' + filters.map(([val,label]) => '<option value="' + val + '"' + (val === listFilter ? ' selected' : '') + '>' + label + '</option>').join('') + '</select></div>' +
@@ -372,12 +372,16 @@ function handleAction(action) {
     contentList(); say(n + ' entries published to the storefront.'); return;
   }
   if (action === 'reset') {
-    if (!window.confirm('Reset this browser’s workshop? This clears your drafts and published products, leaving the storefront empty.')) return;
+    if (!window.confirm('Reset the catalogue demo? This clears this browser’s CMS drafts and published products, leaving the CMS and storefront empty.')) return;
+    const wasShop = document.body.dataset.view === 'store';
     for (const row of index.values()) {
       localStorage.removeItem(prefix + row.id);
       index.delete(row.id);
     }
-    records.clear(); listFilter = 'all'; search = ''; contentList(); say('Workshop reset.'); return;
+    records.clear(); importPreview = []; listFilter = 'all'; search = ''; page = 0; selected = null; validated = false;
+    const destination = wasShop ? '#store' : '#cms';
+    if (location.hash !== destination) location.hash = destination;
+    route(); say('Demo reset. The CMS and storefront are empty.'); return;
   }
   if (!selected) return;
   if (['save','check','publish'].includes(action)) {
@@ -406,7 +410,7 @@ function route() {
   document.body.dataset.view = shop ? 'store' : 'cms';
   if (shop) {
     selected = null;
-    const args = { main, items:liveItems(), colours:data.colours, asset, id, size };
+    const args = { main, items:liveItems(), colours:data.colours, asset, id, size, resetDemo:() => handleAction('reset') };
     if (view === 'store') renderStorefront(args); else renderProduct(args);
     document.title = view === 'store' ? 'Women’s New Arrivals · Workshop storefront' : (index.has(id) && getLive(index.get(id))?.title || 'Product') + ' · Workshop storefront';
   } else if (id && index.has(id)) {

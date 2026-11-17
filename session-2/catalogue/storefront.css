@@ -30,6 +30,8 @@ body[data-view="store"] #main {max-width:none;width:100%;padding:0;margin:0}
 .sf-tools a,.sf-tools button {min-height:40px;min-width:28px;display:inline-flex;align-items:center;justify-content:center}
 .sf-tools svg {width:27px;height:27px;stroke-width:1.5}
 .sf-tools .sf-menu-toggle {display:flex}
+.sf-page .sf-reset-demo {flex:none;border:1px solid #bbb;border-radius:5px;padding:8px 11px;font-size:12px;white-space:nowrap}
+@media(max-width:600px){.sf-header{flex-wrap:wrap}.sf-page .sf-reset-demo{margin-left:auto}}
 .sf-crumb {padding:22px var(--sf-margin) 0;font-size:14px}
 .sf-collection-head {padding:clamp(90px,13vw,180px) var(--sf-margin) 34px;display:flex;align-items:baseline;gap:16px}
 .sf-collection-head h1 {font-family:inherit;font-size:clamp(44px,5.55vw,88px);font-weight:400;letter-spacing:-.058em;line-height:1.1}

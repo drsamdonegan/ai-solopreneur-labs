@@ -53,6 +53,7 @@
     modal = $("#modal"),
     status = $("#status");
   const start = () => ({ rows: {}, suggest: true, compact: false });
+  let statementRevision = 0;
   let sample,
     data,
     active,
@@ -133,6 +134,7 @@
     active = id;
     data = obj;
     s = loaded;
+    statementRevision++;
     q = "";
     onlyNotes = false;
     view = "open";
@@ -995,7 +997,8 @@
             method === "get" ? "readonly" : "readwrite",
           ),
           store = tx.objectStore("files");
-        const req = method === "put" ? store.put(v, k) : store.get(k);
+        const req = method === "put" ? store.put(v, k)
+          : method === "delete" ? store.delete(k) : store.get(k);
         tx.oncomplete = () => resolve(req.result);
         tx.onerror = () => reject(tx.error);
         tx.onabort = () =>
@@ -1005,14 +1008,49 @@
       con.close();
     }
   }
+  async function clearStatementReceipts(receiptKeys) {
+    if (!receiptKeys.length) return;
+    const connection = await db();
+    try {
+      await new Promise((resolve, reject) => {
+        const transaction = connection.transaction("files", "readwrite");
+        const files = transaction.objectStore("files");
+        for (const receiptKey of receiptKeys) files.delete(receiptKey);
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error);
+        transaction.onabort = () => reject(transaction.error);
+      });
+    } finally {
+      connection.close();
+    }
+  }
+  async function resetDemo(button) {
+    if (!window.confirm(
+      "Reset this statement’s demo? This clears its reconciliation decisions, edits, notes and attached receipts on this browser and restores the original open transactions.",
+    )) return;
+    button.disabled = true;
+    const statementId = active;
+    const receiptKeys = Object.values(s.rows).map(row => row.receipt?.key).filter(Boolean);
+    try {
+      put(stateKey(), start());
+      activate(statementId, data);
+      await clearStatementReceipts(receiptKeys);
+      notify("Demo reset. The original transactions are ready to reconcile.");
+    } finally {
+      button.disabled = false;
+    }
+  }
   async function attach(r, blob, name, source = "") {
     if (!blob || blob.size > 20 * 1024 * 1024)
       throw Error("Choose a receipt smaller than 20 MB.");
     const target = active,
+      revision = statementRevision,
       receiptKey = target + ":" + r.id + ":" + crypto.randomUUID();
     await fileOp("put", receiptKey, blob);
-    if (active !== target)
-      throw Error("The active statement changed. Re-open the intended line.");
+    if (active !== target || statementRevision !== revision) {
+      await fileOp("delete", receiptKey);
+      throw Error("The statement was reset or changed. Re-open the line to attach its receipt.");
+    }
     const st = lineState(r),
       d = draft(r),
       old = st.receipt;
@@ -1135,6 +1173,7 @@
       return;
     }
     if (act === "close") modal.close();
+    if (act === "reset") await resetDemo(btn);
     if (act === "datasets") datasets();
     if (act === "report") {
       view = "review";
@@ -1253,6 +1292,7 @@
   );
   window.addEventListener("storage", (e) => {
     if (data && e.key === stateKey() && e.newValue) {
+      statementRevision++;
       s = JSON.parse(e.newValue);
       render();
     }

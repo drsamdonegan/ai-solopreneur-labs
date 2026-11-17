@@ -67,7 +67,7 @@ function shell() {
     '<nav class="sf-navigation" aria-label="Shop departments">' + navLinks() + '</nav><div class="sf-tools">' +
     '<button type="button" data-sf="search" aria-label="Search products">' + icon('search') + '</button>' + toggle('heart','View favourites') +
     '<a href="#cms" title="Open workshop CMS" aria-label="Open workshop CMS">' + icon('user') + '</a>' + toggle('bag','Shopping bag') +
-    '<button type="button" data-sf="menu" class="sf-menu-toggle" aria-label="Browse departments">' + icon('menu') + '</button></div></header>';
+    '<button type="button" data-sf="menu" class="sf-menu-toggle" aria-label="Browse departments">' + icon('menu') + '</button></div><button type="button" class="sf-reset-demo" data-sf="reset-demo">Reset demo</button></header>';
 }
 function tail() {
   return '<div class="sf-foot"><span>Workshop storefront</span><a href="#cms">Open catalogue CMS</a><a href="../#slide-17">Workshop slides</a></div>' +
@@ -248,6 +248,7 @@ function bind(ctx) {
       return;
     }
     const action=control.dataset.sf;
+    if(action==='reset-demo') {ctx.resetDemo(); return;}
     if(action==='hide-banner') {bannerDismissed=true; control.parentElement.remove();}
     else if(action==='close') dialog.close();
     else if(action==='reset') {
