@@ -36,11 +36,19 @@
     </div>`;
     if(tab.type==='catalogueWorkshop')return `<div class="catalogue-workshop">
       <ol class="catalogue-route">
-        <li><div><h2>Read the supplier sheet</h2><p>Use Storefront Collection to rebuild the shop. Weekly Drop is the cleanup exercise.</p></div><a href="catalogue/weekly-drop.xlsx" download>Download Excel ↓</a></li>
-        <li><div><h2>Build the CMS listing</h2><p>Paste spreadsheet rows, review drafts, then publish.</p></div><a href="catalogue/" target="_blank" rel="noopener">Open CMS ↗</a></li>
-        <li><div><h2>Check the shop page</h2><p>Start empty. Publish one product, then the full collection.</p></div><a href="catalogue/#store" target="_blank" rel="noopener">Open storefront ↗</a></li>
+        <li><div><h2>Clean the worksheet</h2><p>Match each supplier row to the approved style, colour, price and photo.</p></div></li>
+        <li><div><h2>Plan the shop in rows</h2><p>Lead with hero styles. Group by type and colour. Finish with accessories.</p></div><a href="catalogue/" target="_blank" rel="noopener">Open CMS ↗</a></li>
+        <li><div><h2>Publish the drop</h2><p>Import drafts, then publish and check the collection.</p></div><a href="catalogue/#store" target="_blank" rel="noopener">Open storefront ↗</a></li>
       </ol>
-      <figure class="catalogue-example"><img src="catalogue/reference/lw3ljws-77652-front.webp" alt="Laser Lime Super Swiftly shirt from the collection worksheet"><figcaption><span>Row L001 · $109.00</span><strong>Super Swiftly Relaxed-Fit Shirt</strong><small>LW3LJWS + 77652 + XS → <b>LW3LJWS_77652_XS</b></small></figcaption></figure>
+      <figure class="catalogue-example"><img src="catalogue/images/pleated-midi-skirt-crimson.webp" alt="Crimson pleated midi skirt"><figcaption><span>Weekly Drop · R001</span><strong>Crimson Pleated Midi Skirt</strong><small>First size SKU · <b>6101_11_XS</b></small></figcaption></figure>
+    </div>`;
+    if(tab.type==='supplierWorksheet')return `<div class="catalogue-workshop">
+      <ol class="catalogue-route">
+        <li><div><h2>Start with Weekly Drop</h2><p>100 supplier rows. Some codes, names, prices and photos need fixing.</p></div><a href="catalogue/worksheet.html" target="_blank" rel="noopener">Open worksheet ↗</a></li>
+        <li><div><h2>Check the references</h2><p>Use Style Master, Colour Key and Asset Library to resolve conflicts.</p></div><a href="catalogue/weekly-drop.xlsx" download>Download Excel ↓</a></li>
+        <li><div><h2>Fill in CMS Import</h2><p>Write verified products and their display positions here. Leave unresolved rows out.</p></div></li>
+      </ol>
+      <figure class="catalogue-example"><img src="catalogue/images/pleated-midi-skirt-moss.webp" alt="Approved moss skirt"><figcaption><span>Photo check · R003</span><strong>Which skirt is Moss?</strong><small>Compare the supplier URL with the approved asset.</small></figcaption></figure>
     </div>`;
     if(tab.type==='demoVariant')return `<figure class="demo-variant"><div class="demo-variant-head">${tab.panels.map(([title])=>`<h2>${esc(title)}</h2>`).join('')}</div><div class="demo-variant-art"><img src="assets/${esc(tab.key)}.jpg" alt=""></div><div class="demo-variant-copy">${tab.panels.map(([, ...lines])=>`<section>${lines.map(line=>`<p>${esc(line)}</p>`).join('')}</section>`).join('')}</div><figcaption>${esc(tab.caption)}</figcaption></figure>`;
     if(tab.type==='sessionOrganisation')return `<figure class="code-demo session-organisation"><div class="session-patterns"><section><h2>Two or three sessions</h2><div class="session-pair"><strong>Web Builder</strong><span aria-hidden="true">↔</span><strong>Test session</strong></div><p>Message each other directly</p></section><section><h2>Many active sessions</h2><div class="session-tree"><strong>Coordinator</strong><span aria-hidden="true">↓</span><strong>Specialists</strong></div><p>Coordinator routes requests</p><p>Specialists do the work</p></section></div><figcaption>Claude Code · Cross-session messaging</figcaption></figure>`;
@@ -51,7 +59,7 @@
     if(tab.type==='createSkillIntro')return `<div class="create-skill-intro"><p class="notice">Turn online advice into a skill you can reuse</p><div class="triptych">${concept('Choose advice','Use trusted links or files')}${concept('Create skill','Ask skill-creator to draft guidance')}${concept('Review first','Approve useful rules before saving')}</div><div class="skill-source"><a href="https://www.writewide.com/5-steps-to-avoid-the-ai-clone-crisis-and-keep-your-brand-voice-alive/" target="_blank" rel="noreferrer">Read source article</a></div></div>`;
     if(tab.type==='prompt'){
       const prompt = tab.practicePath
-        ? tab.prompt.replace('{practiceUrl}', new URL(tab.practicePath, document.baseURI).href)
+        ? tab.prompt.replaceAll('{practiceUrl}', new URL(tab.practicePath, document.baseURI).href)
         : tab.prompt;
       return `<div class="final-prompt-layout"><aside class="prompt-guide review-cycle"><strong>What this prompt does</strong><ol>${tab.guide.map(g=>`<li><b>${esc(g)}</b></li>`).join('')}</ol></aside><section class="copy-prompt-card prompt-${tab.size || 'standard'}"><header><div><b>Claude prompt</b>${tab.headerNote?` <span>${esc(tab.headerNote)}</span>`:''}<span>${prompt.includes('[')?'Replace or remove red brackets before sending':''}</span></div><button class="copy" type="button">Copy prompt</button></header><pre tabindex="0" aria-label="Full copyable prompt"><code>${markBrackets(prompt)}</code></pre></section></div>`;
     }

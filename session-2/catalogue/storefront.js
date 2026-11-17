@@ -7,15 +7,12 @@ const productLink = (item, size = item.sizes?.[0] || '') => '#product/' + urlPar
 const priceFormat = new Intl.NumberFormat('en-AU', {minimumFractionDigits: 0, maximumFractionDigits: 2});
 const aud = number => 'A$' + (Number.isInteger(Number(number)) ? priceFormat.format(number) : Number(number).toFixed(2));
 const names = {
-  'New & Featured': "Women’s What’s New", Women: "Women’s What’s New", Men: "Men’s What’s New",
+  'New & Featured': "What’s New", Women: "Women’s What’s New", Men: "Men’s What’s New",
   Kids: 'Kids', Baby: 'Baby', Accessories: 'Accessories', Bags: 'Bags', 'We Made Too Much': 'We Made Too Much',
   Bestsellers: 'Bestsellers', 'Shop Groove': 'Shop Groove', 'Shop T-Shirts': 'T-Shirts', 'Shop Shorts': 'Shorts',
   Favourites: 'Your favourites'
 };
 const navigation = ['Women', 'Men', 'Kids', 'Baby'];
-const features = [
-  ['Bestsellers', 'bestsellers'], ['Shop Groove', 'groove'], ['Shop T-Shirts', 't-shirts'], ['Shop Shorts', 'shorts']
-];
 const iconPaths = {
   search: '<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5.5 5.5"/>',
   globe: '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',
@@ -100,15 +97,8 @@ function filtered(items) {
     && (!listing.category || item.productClass === listing.category) && (!listing.colour || item.colour === listing.colour)
     && (!listing.activity || item.activity === listing.activity) && (!listing.size || item.sizes.includes(listing.size))
     && (!query || [item.title,item.styleName,item.styleCode,item.colour,item.category,...item.skus].join(' ').toLowerCase().includes(query)));
-  // Collection colourways stay on their main card. Search and colour filters
-  // can surface an individual colourway without changing the collection order.
-  const discoverVariants = !!(query || listing.colour || listing.nav === 'Favourites');
-  const visible = result.filter(item => !item.isSwatchVariant || discoverVariants);
-  const edited = visible.filter(item => !item.referenceOrder);
-  const reference = visible.filter(item => item.referenceOrder)
-    .flatMap(item => (item.referencePositions || [item.referenceOrder]).map(pos => ({pos,item})))
-    .sort((a,b)=>a.pos-b.pos).map(entry=>entry.item);
-  const cards = [...edited, ...reference];
+  const cards = result.sort((a,b) => Number(a.displayRow) - Number(b.displayRow)
+    || Number(a.rowPosition) - Number(b.rowPosition) || a.id.localeCompare(b.id));
   if (listing.sort === 'asc' || listing.sort === 'desc') {
     const direction = listing.sort === 'asc' ? 1 : -1;
     cards.sort((a,b) => direction * ((a.salePrice ?? a.price) - (b.salePrice ?? b.price)));
@@ -153,27 +143,33 @@ function updateProducts(ctx) {
   const grid = ctx.main.querySelector('#sf-products');
   if (!grid) return;
   grid.classList.toggle('sf-dense', listing.dense);
-  const cards = result.map(item => productCard(item,ctx));
-  const standardCollection = ['New & Featured','Women'].includes(listing.nav) && !listing.query && !listing.category && !listing.size && !listing.colour && !listing.activity && listing.sort === 'featured';
-  if (standardCollection && cards.length > 6) {
-    cards.splice(6, 0, '<aside class="sf-promo"><h2>Publish your next product.</h2><a href="#cms">Open workshop CMS</a></aside>');
-  }
+  let content;
+  if (listing.sort === 'featured') {
+    const shelves = new Map();
+    for (const item of result) {
+      if (!shelves.has(item.displayRow)) shelves.set(item.displayRow, []);
+      shelves.get(item.displayRow).push(item);
+    }
+    content = [...shelves].map(([row,items]) => {
+      const types = [...new Set(items.map(p=>p.productClass).filter(Boolean))].join(' & ');
+      const colours = [...new Set(items.map(p=>p.colour).filter(Boolean))].join(' · ');
+      const feature = items.every(p=>p.badge === 'New') ? 'New arrivals' : 'Collection';
+      return '<section class="sf-shelf" aria-label="Display row ' + escape(row) + '"><header class="sf-shelf-label"><small>' +
+        feature + ' / ' + escape(String(row).padStart(2,'0')) + '</small><h2>' + (escape(types) || 'Products') + '</h2><p>' +
+        escape(colours) + '</p></header><div class="sf-shelf-cards" style="--items:' + items.length + '">' +
+        items.map(item => productCard(item,ctx)).join('') + '</div></section>';
+    }).join('');
+  } else content = result.map(item => productCard(item,ctx)).join('');
   const empty = ctx.items.length === 0
     ? '<div class="sf-no-results"><h2>Your storefront is empty</h2><p>Publish a product in the CMS to display it here.</p><a class="sf-solid" href="#cms">Open catalogue CMS</a></div>'
     : '<div class="sf-no-results"><h2>No products found</h2><button type="button" data-sf="reset">Show all products</button></div>';
-  grid.innerHTML = cards.join('') || empty;
+  grid.innerHTML = content || empty;
   ctx.main.querySelector('#sf-result-count').textContent = String(result.length);
   ctx.main.querySelector('#sf-heading').textContent = listing.query ? 'Search results' : names[listing.nav];
   const count = 1 + ['category','colour','size','activity'].filter(k => listing[k]).length;
   const filterCount = ctx.main.querySelector('#sf-filter-count');
   if (filterCount) { filterCount.textContent = String(count); filterCount.hidden = !count; }
   ctx.main.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (listing.dense ? 'dense' : 'large'))));
-}
-function categories() {
-  return '<section class="sf-features" aria-label="Featured collections"><div class="sf-feature-rail">' +
-    features.map(([title, file]) => '<a href="#store" data-section="' + escape(title) + '"><img src="reference/' + file + '.webp" alt=""><span>' + escape(title) + '</span></a>').join('') +
-    '</div><div class="sf-rail-controls"><button type="button" data-scroll="-1" aria-label="Previous collections">' + icon('left') + '</button>' +
-    '<button type="button" data-scroll="1" aria-label="Next collections">' + icon('right') + '</button></div></section>';
 }
 function toolbar() {
   return '<div class="sf-toolbar" role="group" aria-label="Collection controls"><div class="sf-view">View' +
@@ -282,15 +278,9 @@ export function renderStorefront(ctx) {
     Object.assign(listing,{nav:'New & Featured',query:'',category:'',size:'',colour:'',activity:'',sort:'featured'});
   }
   ctx.main.innerHTML = '<div class="sf-page">' + shell() + '<div class="sf-crumb">What\'s New</div><div class="sf-collection-head"><h1 id="sf-heading"></h1><span id="sf-result-count" aria-label="Products"></span></div>' +
-    (ctx.items.length ? categories() : '') + '<section id="sf-products" aria-label="Collection products"></section>' + (ctx.items.length ? toolbar() : '') + tail() + '</div>';
+    '<section id="sf-products" aria-label="Collection products"></section>' + (ctx.items.length ? toolbar() : '') + tail() + '</div>';
   updateProducts(ctx); bind(ctx);
-  const rail=ctx.main.querySelector('.sf-feature-rail');
-  if (!rail) return;
-  const updateArrows=()=>{
-    ctx.main.querySelector('[data-scroll="-1"]').disabled = rail.scrollLeft<2;
-    ctx.main.querySelector('[data-scroll="1"]').disabled = rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-2;
-  };
-  rail.addEventListener('scroll',updateArrows,{passive:true}); updateArrows();
+
 }
 export function renderProduct(ctx) {
   const {main,id,size,items,asset,colours}=ctx, item=items.find(p=>p.id===id);

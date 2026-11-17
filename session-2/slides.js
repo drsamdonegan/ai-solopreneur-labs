@@ -313,34 +313,29 @@ window.LAB2 = {
     {
       "n": 24,
       "title": "The weekly product drop",
-      "subtitle": "Every week, 100 rows arrive in Excel. How much of the work can you hand to an agent?",
+      "subtitle": "Turn a messy delivery of 100 products into an ordered collection.",
       "tabs": [
         {
-          "label": "Try the workflow",
+          "label": "Description",
           "type": "catalogueWorkshop"
         },
         {
-          "label": "Agent brief",
-          "type": "prompt",
-          "guide": [
-            "Attach the Excel workbook",
-            "Start with an empty shop",
-            "Publish and verify the collection"
-          ],
-          "prompt": "Use Chrome to rebuild this practice storefront from the attached weekly-drop.xlsx. Open https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/ and its Storefront tab. If needed, use Reset workshop in the CMS so the shop starts empty.\n\nUse the Storefront Collection worksheet for this demonstration. Copy its header and all 360 product rows into Paste spreadsheet rows in the CMS. Preview the import, check the titles, prices, images, sizes and stock, then import drafts. Open the first draft, review its input fields and publish it. Show that one product has appeared in the shop.\n\nPublish the remaining verified drafts using the CMS controls. Do all edits and publication through the visible Chrome interface. Open the storefront and check its collection layout, colour swatches and product detail pages against the workbook. Select the sizes and check their SKUs, stock, title, price and images. Report what you published, what you checked and any exceptions.\n\nThe separate Weekly Drop worksheet is the imperfect 100-row cleanup exercise; do not mix it into this collection rebuild."
+          "label": "Messy Supplier Feed",
+          "type": "supplierWorksheet"
         },
         {
-          "label": "Messy supplier feed",
+          "label": "Agent Brief",
           "type": "prompt",
           "guide": [
-            "Attach the weekly Excel file",
-            "Open the practice CMS",
-            "Review the exceptions"
+            "Clean the worksheet first",
+            "Choose each row and position",
+            "Import drafts, publish and check"
           ],
-          "prompt": "Prepare this week’s product drop in the practice catalogue CMS at https://applied-ai-session-2.drsamdonegan.chatgpt.site/session-2/catalogue/. Use the attached weekly-drop.xlsx and its reference sheets.\n\nFor each row, trim the style and colour codes, strip their leading zeros and join them with an underscore. Append an underscore and the size to make each SKU. Standardise the title, prices and stock, and map the merchandising fields into the CMS.\n\nCompare the product image with the garment and colour in the title. If the price, image or another field conflicts with its reference, hold the row and tell me exactly what needs checking.\n\nPublish the verified listings in this practice storefront. Open each listing and select each size. Check its SKU, title, price, photo and stock against the workbook. Report the number of listings published, SKUs checked and rows held, with the reason for each exception."
+          "practicePath": "catalogue/",
+          "prompt": "Use Chrome to prepare this week’s 100-product drop. Start at {practiceUrl}worksheet.html. Work from Weekly Drop and its reference sheets. Keep the raw feed intact; write your verified rows into the blank CMS Import worksheet before opening the CMS.\n\nStrip leading zeros from style and colour codes. Join them with an underscore; append the size for each SKU. Match names, colours, categories, prices and photos to Style Master, Colour Key and Asset Library. Keep size and stock in the same order. Hold unresolved rows and note why.\n\nPlan the shop in the worksheet. This week’s hero styles are the Pleated Midi Skirt and Satin Bias Skirt: give them the first rows and the New badge. Follow with the higher-priced clothing, working down by price, and finish with bags and accessories. Keep one item type and a related colour palette per row. For example, pair the two crimson hero skirts. Set displayRow (top to bottom) and rowPosition (left to right) for every item.\n\nCopy the completed CMS Import rows into Paste spreadsheet rows in the empty CMS at {practiceUrl}. Preview and import as drafts. Check the shop is still empty, then publish. In the storefront’s Featured view, verify the row order and open each product. Check colour, photo, title, price, stock and size SKUs against the worksheet. Report published items, any holds and anything you couldn’t verify."
         }
       ],
-      "note": "For the before-and-after Chrome demonstration, use Reset workshop in the CMS and show the empty storefront first. Open the workbook’s first worksheet, Storefront Collection: 360 colourways with 1,749 size SKUs. Copy A1:Z361 into Paste spreadsheet rows, preview, then import drafts. Review and publish the first product by hand, show it in the shop, then publish the remaining ready drafts through the visible CMS button. The full collection restores the existing images, swatches and original card order. Data is saved only in this browser; Reset workshop makes it empty again. Keep CMS and storefront tabs on the same origin so publication updates both. The separate Messy supplier feed tab preserves the original 100-row exercise: strip padded codes, build style_colour_size SKUs, standardise fields and investigate eight exceptions using the reference sheets. Do not publish that separate exercise into the collection rebuild."
+      "note": "Open Messy Supplier Feed before the Agent Brief. Start on Weekly Drop, show the padded codes on R001, then compare R003 with Asset Library: its supplier URL shows a crimson skirt where the colour is Moss. In CMS Import, enter the clean title and codes, the verified photo, prices, size SKUs and stock. The two hero skirt styles are this week’s editorial picks. Put the two crimson skirts side by side; use separate rows for other palettes. Follow with higher-priced apparel, ending with accessories. Use two or three cards per display row for the projector. Paste verified worksheet rows into the empty CMS as drafts, briefly show the still-empty storefront, then publish. Row numbers and positions determine the Featured view even if the agent entered the records in a different order. Reset workshop in the CMS to clear its entries and storefront before another run; the original workbook download always opens with a blank CMS Import sheet."
     },
     {
       "n": 25,
