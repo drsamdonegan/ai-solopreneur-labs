@@ -406,6 +406,89 @@ window.LAB2 = {
       "note": "Give everyone a quiet moment to jot down one real task they would like AI to do. It might be an annoying or frustrating business process they repeat each week, something they want taken off their plate, or something that would help them feel more organised. Go around the room and invite each person to share their task and the result they would like. Use these tasks for the hands-on practice that follows."
     },
     {
+      "n": 36,
+      "title": "Connections",
+      "subtitle": "What does your task need access to?",
+      "tabs": [
+        {
+          "label": "Connections",
+          "type": "outcomeList",
+          "items": [
+            "Name the tools you open when you do this task by hand.",
+            "For each tool, write what the AI needs to read, draft or change."
+          ]
+        }
+      ],
+      "note": "Give everyone two minutes. Ask them to follow the task they chose on the previous slide from its first input to its final destination. For a quote enquiry, the AI might read the customer’s email, look up stock in a spreadsheet and draft a reply in Gmail. Ask participants to name the specific inbox, sheet or folder they would connect."
+    },
+    {
+      "n": 37,
+      "title": "Instructions",
+      "subtitle": "Walk through the last time you did the task.",
+      "tabs": [
+        {
+          "label": "Instructions",
+          "type": "outcomeList",
+          "items": [
+            "Write down what started the task and what you opened first.",
+            "List your actions in order. Include the decisions you made along the way.",
+            "Describe the finished result and when the AI should ask for help."
+          ]
+        }
+      ],
+      "note": "Give participants three minutes to replay a recent example. If someone writes “handle a quote”, ask what they looked up before replying. Did they have the quantity, sizes and delivery date? Have them write down what they did when one of those details was missing. Ask a partner to follow the steps and point out one assumption."
+    },
+    {
+      "n": 38,
+      "title": "Examples",
+      "subtitle": "Show the AI what good work looks like in your business.",
+      "tabs": [
+        {
+          "label": "Examples",
+          "type": "outcomeList",
+          "items": [
+            "Pick one real request and write the response or result you’d accept.",
+            "For that same request, show a plausible mistake and explain what makes it wrong."
+          ]
+        }
+      ],
+      "note": "Use one customer enquiry throughout. The customer asks for 40 shirts by Friday but leaves out the sizes. A good draft asks for the size breakdown so the team can check stock. A poor draft promises Friday delivery before anyone has checked availability. Give participants two minutes to create a pair like this for their own task."
+    },
+    {
+      "n": 39,
+      "title": "Tests",
+      "subtitle": "Try the skill on a case where you know the answer.",
+      "tabs": [
+        {
+          "label": "Tests",
+          "type": "outcomeList",
+          "items": [
+            "Give the AI your tools, steps and examples. Ask it to draft a reusable skill.",
+            "Run it on one past case and one with a missing detail. Preview the results.",
+            "Compare both results with what you expected. Fix one instruction and rerun."
+          ]
+        }
+      ],
+      "note": "Have each person write the expected result before starting. For the quote exercise, supply a complete enquiry first, then remove the sizes. The second draft should ask for them. Use a copy of a past case so participants can inspect the output. If the AI guesses, change the instruction about missing details and run both cases again."
+    },
+    {
+      "n": 40,
+      "title": "Observability",
+      "subtitle": "How will you know the automation did its job today?",
+      "tabs": [
+        {
+          "label": "Observability",
+          "type": "outcomeList",
+          "items": [
+            "Have each run record what it checked, what it did and what it skipped.",
+            "Choose who gets an alert if a run fails, never starts or needs a decision.",
+            "Each day, compare one result with its source and update the skill if it drifted."
+          ]
+        }
+      ],
+      "note": "Ask participants to choose where they will check the record and when. For a daily quote assistant, a log might show four enquiries, three drafts and one waiting for stock confirmation, with links to the originals. Have them choose who checks for a missing run by the expected time. Finish by asking each person to name the first result they will review tomorrow."
+    },
+    {
       "n": 11,
       "title": "Create Your Own Skill",
       "subtitle": "Turn trusted writing advice into reusable guidance against AI slop",
